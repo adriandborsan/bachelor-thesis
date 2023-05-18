@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+spec:
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - image: phpmyadmin
+          name: phpmyadmin 
+          env:
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_root_password
+
+            - name: PMA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name:  phpmyadmin-config
+                  key: pma_host
+
+            - name: PMA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name:  phpmyadmin-config
+                  key: pma_port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: phpmyadmin
+  ports:
+    - port: 80
+      targetPort: 80

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  mysql_database: dbclient
+  mysql_user: dbuser
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+data:
+  mysql_root_password: MTIzNDU= #12345
+  mysql_password: MTIzNA== #1234

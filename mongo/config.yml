@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+  
+data:
+  mongo_root_username: dbuser
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-secret
+  
+data:
+  mongo_root_password: MTIzNA== #1234
+

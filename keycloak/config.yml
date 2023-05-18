@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-config
+data:
+  keycloak_admin: kuser
+  kc_db: postgres
+  kc_db_url_host: postgres-service
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+data:
+  keycloak_admin_password: MTIzNA== #1234
