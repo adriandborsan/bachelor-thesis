@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AdminbackApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdminbackApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AdminbackApplication.class, args);
+    }
 
 }

@@ -1,1 +1,9 @@
-
+spring:
+  data:
+    mongodb:
+      database: ${DB_NAME}
+      uri: mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/?authSource=admin
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    queue: ${RABBIT_QUEUE}
+rabbit_class_name: ${RABBIT_CLASS_NAME}
