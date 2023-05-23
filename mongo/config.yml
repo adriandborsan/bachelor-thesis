@@ -5,6 +5,7 @@ metadata:
   
 data:
   mongo_root_username: dbuser
+  mongo_database: dbadmin
 
 ---
 apiVersion: v1

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientfront-deployment
+spec:
+  selector:
+    matchLabels:
+      app: clientfront
+  template:
+    metadata:
+      labels:
+        app: clientfront
+    spec:
+      containers:
+      - name: clientfront
+        image: clientfront
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clientfront-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: clientfront
+  ports:
+  - port: 80
+    targetPort: 80

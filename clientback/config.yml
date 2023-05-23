@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clientback-config
+data:
+  db_host: mysql-service
+  rabbit_host: rabbitmq-service
+  rabbit_queue: logging
+  rabbit_class: logclass

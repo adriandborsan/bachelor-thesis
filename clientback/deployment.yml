@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientback-deployment
+spec:
+  selector:
+    matchLabels:
+      app: clientback
+  template:
+    metadata:
+      labels:
+        app: clientback
+    spec:
+      containers:
+        - name: clientback
+          image: clientback
+          imagePullPolicy: Never
+          env:
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: db_host
+                  
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_database
+            
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_user
+            
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_password
+          
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_host
+
+            - name: RABBIT_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_queue
+
+            - name: RABBIT_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clientback-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: clientback
+  ports:
+    - port: 8080
+      targetPort: 8080
+

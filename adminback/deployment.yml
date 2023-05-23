@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminback-deployment
+spec:
+  selector:
+    matchLabels:
+      app: adminback
+  template:
+    metadata:
+      labels:
+        app: adminback
+    spec:
+      containers:
+        - name: adminback
+          image: adminback
+          imagePullPolicy: Never
+          env:
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: mongo_database
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: adminback-config
+                  key: db_host
+
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: mongo_root_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo_root_password
+                  
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_host
+
+            - name: RABBIT_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_queue
+
+            - name: RABBIT_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminback-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: adminback
+  ports:
+    - port: 8080
+      targetPort: 8080
+
