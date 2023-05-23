@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Update post with id {{ postData.id }}</h2>
+<mat-dialog-content [formGroup]="editPostForm">
+  <mat-form-field>
+    <mat-label>Edit title</mat-label>
+    <input type="text" matInput  formControlName="title">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Edit message</mat-label>
+    <textarea matInput formControlName="message"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button  color="primary" (click)="onFormCancel()">Cancel Post edit</button>
+  <button mat-raised-button color="accent" (click)="onFormSubmit()">
+    Edit post
+  </button>
+</mat-dialog-actions>
