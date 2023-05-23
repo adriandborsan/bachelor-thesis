@@ -1,1 +1,35 @@
-
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    queue: ${RABBIT_QUEUE}
+    # port: ${RABBIT_PORT}
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${ISSUER_URL}
+#      client:
+#        registration:
+#          keycloak:
+#            scope: openid
+#            authorization-grant-type: authorization_code
+#            client-id: login-app
+#        provider:
+#          keycloak:
+#            issuer-uri: http://localhost:8080/realms/kilij
+#            user-name-attribute: preferred_username
+rabbit_class_name: ${RABBIT_CLASS_NAME}
+#minio:
+#  url: http://127.0.0.1:9000
+#  access:
+#    secret: idkwhatkeybutyeah
+#    key: rootpass
+#  bucket:
+#    name: minio-example-demo
