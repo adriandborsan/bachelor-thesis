@@ -46,4 +46,4 @@ Thumbs.db
 #ignored because each user should make it from the template
 #for more information:
 #https://stackoverflow.com/a/67912439/17229945
-#src/proxy.conf.json
+src/proxy.conf.json
