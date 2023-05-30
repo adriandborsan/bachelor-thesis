@@ -9,12 +9,11 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST}
     queue: ${RABBIT_QUEUE}
-    # port: ${RABBIT_PORT}
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: ${ISSUER_URL}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URL}
 #      client:
 #        registration:
 #          keycloak:
