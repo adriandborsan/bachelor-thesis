@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta14
+kind: Config
+metadata:
+  name: keycloak
+build:
+  artifacts:
+  - image: keycloak-custom
+    context: .
+    docker:
+      dockerfile: Dockerfile.keycloak
+deploy:
+  kustomize:
+    paths:
+      - ../k8sconfig/keycloak/
