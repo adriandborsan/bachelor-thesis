@@ -7,3 +7,4 @@ data:
   rabbit_host: rabbitmq-service
   rabbit_queue: logging
   rabbit_class: logclass
+  issuer_url: http://keycloak-service:8080/realms/clientapp

@@ -58,6 +58,13 @@ spec:
                 configMapKeyRef:
                   name: clientback-config
                   key: rabbit_class
+            
+            - name: ISSUER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: issuer_url
+            
 ---
 apiVersion: v1
 kind: Service

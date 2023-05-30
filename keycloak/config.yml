@@ -6,6 +6,7 @@ data:
   keycloak_admin: kuser
   kc_db: postgres
   kc_db_url_host: postgres-service
+  kc_proxy: edge
 ---
 apiVersion: v1
 kind: Secret

@@ -13,9 +13,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:21.1.1
-          args:
-            - "start-dev"
+          image: keycloak-custom
           env:
 
             - name: KEYCLOAK_ADMIN
@@ -29,6 +27,12 @@ spec:
                 secretKeyRef:
                   name: keycloak-secret
                   key: keycloak_admin_password
+
+            - name: KC_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: kc_proxy
 
             - name: KC_DB
               valueFrom:
