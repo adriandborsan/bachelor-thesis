@@ -14,14 +14,14 @@ COPY . /opt/app/
 
 RUN yarn build-keycloak-theme
 
-# RUN curl -L -o /opt/app/keycloak-event-listener-rabbitmq.jar https://github.com/aznamier/keycloak-event-listener-rabbitmq/releases/download/3.0.2/keycloak-to-rabbit-3.0.2.jar
+RUN curl -L -o /opt/app/keycloak-event-listener-rabbitmq.jar https://github.com/aznamier/keycloak-event-listener-rabbitmq/releases/download/3.0.2/keycloak-to-rabbit-3.0.2.jar
 
 FROM quay.io/keycloak/keycloak:latest as builder
 
 WORKDIR /opt/keycloak
 
 COPY --from=keycloakify_jar_builder /opt/app/build_keycloak/target/keycloakify-starter-keycloak-theme-4.4.14.jar /opt/keycloak/providers/
-# COPY --from=keycloakify_jar_builder /opt/app/keycloak-event-listener-rabbitmq.jar /opt/keycloak/providers/
+COPY --from=keycloakify_jar_builder /opt/app/keycloak-event-listener-rabbitmq.jar /opt/keycloak/providers/
 RUN /opt/keycloak/bin/kc.sh build
 
 
