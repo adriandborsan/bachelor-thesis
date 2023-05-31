@@ -1,0 +1,36 @@
+{
+  "realm": "adminapp",
+  "enabled": true,
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": false,
+  "loginTheme": "keycloakify-starter",
+  "accountTheme": "keycloakify-starter",
+  "clients": [
+    {
+      "clientId": "clientfront",
+      "rootUrl": "http://adminfront.hehe",
+      "baseUrl": "http://adminfront.hehe",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    },
+    {
+      "clientId": "clientback",
+      "rootUrl": "http://adminback-service:8080",
+      "baseUrl": "http://adminback-service:8080",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    }
+  ]
+}

@@ -7,6 +7,11 @@ data:
   kc_db: postgres
   kc_db_url_host: postgres-service
   kc_proxy: edge
+  keycloak_event_listener: rabbitmq
+  rabbitmq_host: keycloak-rabbitmq-service
+  rabbitmq_vhost: /
+  rabbitmq_username: guest
+  rabbitmq_password: guest
 ---
 apiVersion: v1
 kind: Secret

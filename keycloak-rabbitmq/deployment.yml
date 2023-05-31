@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-rabbitmq-deployment
+spec:
+  selector:
+    matchLabels:
+      app: keycloak-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: keycloak-rabbitmq
+    spec:
+      containers:
+        - image: rabbitmq:3.11-management-alpine
+          name: keycloak-rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-rabbitmq-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: keycloak-rabbitmq
+  ports:
+    - name: keycloak-rabbitmq
+      port: 5672
+      targetPort: 5672
+    - name: keycloak-rabbitmq-management
+      port: 15672
+      targetPort: 15672

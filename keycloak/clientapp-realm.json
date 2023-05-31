@@ -1,0 +1,36 @@
+{
+  "realm": "clientapp",
+  "enabled": true,
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": false,
+  "loginTheme": "keycloakify-starter",
+  "accountTheme": "keycloakify-starter",
+  "clients": [
+    {
+      "clientId": "clientfront",
+      "rootUrl": "http://clientfront.hehe",
+      "baseUrl": "http://clientfront.hehe",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    },
+    {
+      "clientId": "clientback",
+      "rootUrl": "http://clientback-service:8080",
+      "baseUrl": "http://clientback-service:8080",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    }
+  ]
+}
