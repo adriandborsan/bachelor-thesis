@@ -23,7 +23,4 @@ public class KeycloakEventListener {
         }
     }
 
-    @RabbitListener(queues = "adminqueue", messageConverter = "jsonMessageConverter")
-    public void handleAdminEvent(@Payload AdminKeycloakEvent event) {
-    }
 }

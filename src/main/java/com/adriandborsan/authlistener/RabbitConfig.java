@@ -30,17 +30,6 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue adminQueue() {
-        return new Queue("adminqueue",false);
-    }
-
-
-    @Bean
-    public Binding adminBinding(TopicExchange topicExchange, Queue adminQueue) {
-        return BindingBuilder.bind(adminQueue).to(topicExchange).with("KK.EVENT.ADMIN.#");
-    }
-
-    @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
