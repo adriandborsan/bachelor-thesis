@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
   datasource:
     url: jdbc:mysql://${DB_HOST}/${DB_NAME}
     username: ${DB_USERNAME}
@@ -25,10 +29,9 @@ spring:
 #            issuer-uri: http://localhost:8080/realms/kilij
 #            user-name-attribute: preferred_username
 rabbit_class_name: ${RABBIT_CLASS_NAME}
-#minio:
-#  url: http://127.0.0.1:9000
-#  access:
-#    secret: idkwhatkeybutyeah
-#    key: rootpass
-#  bucket:
-#    name: minio-example-demo
+minio:
+  url: ${MINIO_URL}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_ACCESS_SECRET}
+  bucket:
+    name: ${MINIO_BUCKET}

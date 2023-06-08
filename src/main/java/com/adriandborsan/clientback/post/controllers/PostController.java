@@ -1,10 +1,11 @@
 package com.adriandborsan.clientback.post.controllers;
 
+import com.adriandborsan.clientback.post.dto.PostDto;
+import com.adriandborsan.clientback.post.dto.UpdatePostDto;
 import com.adriandborsan.clientback.post.entities.Post;
 import com.adriandborsan.clientback.post.services.PostService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -17,13 +18,16 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> findAll() {
-        return postService.findAll();
+    public Page<Post> findAll(@RequestParam(defaultValue = "0", required = false) int pageNumber,
+                              @RequestParam(defaultValue = "100", required = false) int pageSize,
+                              @RequestParam(defaultValue = "id", required = false) String sortBy,
+                              @RequestParam(defaultValue = "asc", required = false) String order) {
+        return postService.findAll(pageNumber, pageSize, sortBy, order);
     }
 
     @PostMapping
-    public void create(@RequestBody Post post) {
-        postService.create(post);
+    public void create(@ModelAttribute PostDto postDto) {
+        postService.create(postDto);
     }
 
     @GetMapping("/{id}")
@@ -37,7 +41,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody Post newPost, @PathVariable Long id) {
+    public void update(@ModelAttribute UpdatePostDto newPost, @PathVariable Long id) {
         postService.update(newPost, id);
     }
 }

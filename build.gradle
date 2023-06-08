@@ -28,7 +28,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
-	// implementation 'io.minio:minio:8.5.1'
+	 implementation 'io.minio:minio:8.5.3'
 }
 
 jar {

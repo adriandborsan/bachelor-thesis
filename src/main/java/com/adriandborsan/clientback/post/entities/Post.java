@@ -1,9 +1,10 @@
 package com.adriandborsan.clientback.post.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,4 +17,6 @@ public class Post {
     private Long id;
     @NonNull  private String title;
     @NonNull  private String message;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FileEntity> files;
 }
