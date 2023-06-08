@@ -12,4 +12,9 @@ export class HomeComponent {
   logout(){
     this.authService.logout();
   }
+
+  redirectToAccountService() {
+    const url = this.authService.createAccountUrl();
+    window.location.href = url;
+}
 }

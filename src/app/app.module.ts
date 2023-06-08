@@ -10,7 +10,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostReadComponent } from './posts/post-read/post-read.component';
 import { PostUpdateComponent } from './posts/post-update/post-update.component';
 import { PostDeleteComponent } from './posts/post-delete/post-delete.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
@@ -28,6 +28,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { environment } from 'src/environments/environment';
+import { MatChipsModule } from '@angular/material/chips';
+import { LogInterceptor } from './auth/log.interceptor';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -35,7 +38,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         url: environment.issuer,
         realm: 'clientapp',
-        clientId: 'clientfront'
+        clientId: environment.client
       },
       initOptions: {
         onLoad: 'check-sso',
@@ -89,13 +92,21 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatExpansionModule,
     FormsModule,
     MatNativeDateModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    MatChipsModule,
+    CarouselModule,
+    BrowserAnimationsModule, // Add this line
   ],
   providers: [{
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LogInterceptor,
+      multi: true
     },
     AuthService,
     AuthGuard

@@ -8,6 +8,24 @@
     <mat-label>Edit message</mat-label>
     <textarea matInput formControlName="message"></textarea>
   </mat-form-field>
+  <p>existing files</p>
+  <mat-chip-listbox>
+    <mat-chip *ngFor="let file of existingFiles; index as i">
+      {{file.originalName}}
+      <mat-icon matChipRemove (click)="removeExistingFile(i)">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-listbox>
+  <p>add new files</p>
+  <div>
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose Files</button>
+    <input hidden (change)="onFileChange($event)" #fileInput type="file" id="file" multiple name="files">
+  </div>
+  <mat-chip-listbox>
+    <mat-chip *ngFor="let file of files; index as i">
+      {{file.name}}
+      <mat-icon matChipRemove (click)="removeFile(i)">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-listbox>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-raised-button  color="primary" (click)="onFormCancel()">Cancel Post edit</button>

@@ -6,6 +6,14 @@ import { KeycloakService } from 'keycloak-angular';
   providedIn: 'root',
 })
 export class AuthService {
+  getUsername() {
+
+    return  this.keycloakService.loadUserProfile();
+  }
+
+  createAccountUrl() {
+    return this.keycloakService.getKeycloakInstance().createAccountUrl();
+}
 
   constructor(private keycloakService: KeycloakService) {}
 

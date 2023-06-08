@@ -19,6 +19,16 @@
           <textarea matInput cdkTextareaAutosize formControlName="message">
           </textarea>
         </mat-form-field>
+        <div>
+          <button type="button" mat-raised-button (click)="fileInput.click()">Choose Files</button>
+          <input hidden (change)="onFileChange($event)" #fileInput type="file" id="file" multiple name="files">
+        </div>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let file of files; index as i">
+            {{file.name}}
+            <mat-icon matChipRemove (click)="removeFile(i)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-listbox>
         <button [disabled]="!createPostForm.valid" mat-raised-button color="primary">add new post</button>
       </form>
     </mat-expansion-panel>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../post.model';
+import { Post, PostResponse } from '../post.model';
 import { PostService } from '../post.service';
 
 @Component({
@@ -21,7 +21,10 @@ export class PostReadComponent implements OnInit{
   }
 
   redreshData(){
-    this.postService.getPosts().subscribe(posts=>this.posts=posts);
+    this.postService.getPosts().subscribe(postResponse=>{
+      console.log(JSON.stringify(postResponse));
+      this.posts=postResponse.content;
+    });
   }
 
 }

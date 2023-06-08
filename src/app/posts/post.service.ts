@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, of, throwError } from 'rxjs';
 import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostUpdateComponent } from './post-update/post-update.component';
-import { Post } from './post.model';
+import { Post, PostResponse,PostFile, UpdatePost } from './post.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +17,21 @@ export class PostService {
   postsModifiedEventEmitter = new EventEmitter();
 
   getPosts() {
-    return this.http.get<Post[]>(this.baseUri).pipe(
+    return this.http.get<PostResponse>(this.baseUri).pipe(
+      map((response: PostResponse) => {
+        response.content.forEach((post: Post) => {
+          post.files.forEach((file: PostFile) => {
+            file.fullPath = environment.minioUrl +"/"+environment.bucket+ file.path;
+          });
+        });
+        return response;
+      }),
       catchError((error) => {
         this.handleError(error);
-        return [];
+        return of(PostResponse.defaultPostResponse());
       })
     );
+
   }
 
   handleError(error: any) {
@@ -42,9 +52,9 @@ export class PostService {
     );
   }
 
-  addPost(post: Post) {
+  addPost(formData: FormData) {
     this.http
-      .post<Post>(this.baseUri, post)
+      .post<Post>(this.baseUri, formData)
       .pipe(catchError((error) => this.handleError(error)))
       .subscribe({
         complete: () => {
@@ -93,9 +103,9 @@ export class PostService {
     });
   }
 
-  updatePost(post: Post, id: number) {
+  updatePost(post: UpdatePost, id: number) {
     return this.http
-      .put<Post>(`${this.baseUri}/${id}`, post)
+      .put<UpdatePost>(`${this.baseUri}/${id}`, post)
       .pipe(catchError((error) => this.handleError(error)))
       .subscribe({
         complete: () => {
