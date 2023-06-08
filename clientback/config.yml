@@ -8,3 +8,5 @@ data:
   rabbit_queue: logging
   rabbit_class: logclass
   issuer_url: http://keycloak-service:8080/realms/clientapp
+  minio_url: http://minio-service
+  minio_bucket: post-bucket

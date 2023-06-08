@@ -27,6 +27,8 @@ spec:
           image: minio/minio
           args:
             - server
+            - --address 
+            - ":80"
             - /data
             - --console-address
             - ":9001"
@@ -47,10 +49,35 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /data
+        - name: bucket-setup
+          image: minio/mc
+          command: ["sh", "/scripts/bucket-setup.sh"]
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config
+                  key: minio_root_user
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+            - name: bucket-settings
+              mountPath: /etc/bucket-settings
       volumes:
         - name: storage
           persistentVolumeClaim:
             claimName: minio-pvc
+        - name: bucket-settings
+          configMap:
+            name: bucket-settings
+        - name: scripts
+          configMap:
+            name: minio-scripts
 ---
 apiVersion: v1
 kind: Service
@@ -62,9 +89,8 @@ spec:
     app: minio
   ports:
     - name: minio
-      port: 9000
-      targetPort: 9000
+      port: 80
+      targetPort: 80
     - name: minio-console
       port: 9001
       targetPort: 9001
- 

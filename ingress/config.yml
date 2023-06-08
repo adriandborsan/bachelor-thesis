@@ -7,4 +7,5 @@ data:
   proxy-buffer-size: "128k"
   proxy-buffers: "8 256k"
   proxy-busy-buffers-size: "256k"
-  
+  client-body-buffer-size: "256m"  
+  proxy-body-size: "0"

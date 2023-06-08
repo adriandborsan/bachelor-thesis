@@ -65,6 +65,30 @@ spec:
                   name: clientback-config
                   key: issuer_url
             
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config
+                  key: minio_root_user
+                  
+            - name: MINIO_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+            
+            - name: MINIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_url
+            
+            - name: MINIO_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_bucket
+            
 ---
 apiVersion: v1
 kind: Service

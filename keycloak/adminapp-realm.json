@@ -7,7 +7,7 @@
   "accountTheme": "keycloakify-starter",
   "clients": [
     {
-      "clientId": "clientfront",
+      "clientId": "adminfront",
       "rootUrl": "http://adminfront.hehe",
       "baseUrl": "http://adminfront.hehe",
       "redirectUris": [
@@ -20,9 +20,35 @@
       "standardFlowEnabled": true
     },
     {
-      "clientId": "clientback",
+      "clientId": "testfront",
+      "rootUrl": "http://localhost:4200",
+      "baseUrl": "http://localhost:4200",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    },
+    {
+      "clientId": "adminback",
       "rootUrl": "http://adminback-service:8080",
       "baseUrl": "http://adminback-service:8080",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "publicClient": true,
+      "standardFlowEnabled": true
+    },
+    {
+      "clientId": "testback",
+      "rootUrl": "http://localhost:8080",
+      "baseUrl": "http://localhost:8080",
       "redirectUris": [
         "/*"
       ],
