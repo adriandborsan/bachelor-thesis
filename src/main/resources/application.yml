@@ -6,4 +6,9 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST}
     queue: ${RABBIT_QUEUE}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URL}
 rabbit_class_name: ${RABBIT_CLASS_NAME}
