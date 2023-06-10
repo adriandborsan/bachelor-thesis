@@ -3,12 +3,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { LogEntry } from '../models/log-entry.model';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { AuthService } from '../auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LogEntryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService:AuthService) {}
 
   restApi = '/api/v1/rest/logs';
   reactiveApi = '/api/v1/reactive/logs';
@@ -50,18 +53,24 @@ export class LogEntryService {
       );
   }
 
-  es!: EventSource;
+  private myWebSocket?: WebSocketSubject<LogEntry>;
 
-  getLogEntryObservable(): Observable<LogEntry> {
-    return new Observable<LogEntry>((obs) => {
-      const es = new EventSource(this.reactiveApi);
-      es.addEventListener('message', message => {
-        obs.next(JSON.parse(message.data));
-    });
-    });
+  async getLogEntryObservable(): Promise<Observable<LogEntry>> {
+    if (!this.myWebSocket) {
+      const token = await this.authService.getToken();
+      this.myWebSocket = webSocket<LogEntry>({
+        url: environment.websock+this.reactiveApi+ "?token=" + token,
+        deserializer: msg => JSON.parse(msg.data)
+      });
+    }
+    return this.myWebSocket.asObservable();
   }
 
   closeStream() {
-    this.es.close();
+    if (this.myWebSocket) {
+      this.myWebSocket.complete();
+      this.myWebSocket = undefined;
+    }
   }
+
 }

@@ -35,8 +35,8 @@ pageSize= 10;
   }
   dataSource: MatTableDataSource<LogEntry> = new MatTableDataSource();
 
-  createEventSourceObservable() {
-  this.logEntryService.getLogEntryObservable().subscribe(
+  async createEventSourceObservable() {
+  (await this.logEntryService.getLogEntryObservable()).subscribe(
     message=>{
       let logEntries=this.dataSource.data;
       if(logEntries.length>=this.length)
