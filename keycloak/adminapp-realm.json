@@ -1,7 +1,6 @@
 {
   "realm": "adminapp",
   "enabled": true,
-  "registrationAllowed": true,
   "loginWithEmailAllowed": false,
   "loginTheme": "keycloakify-starter",
   "accountTheme": "keycloakify-starter",
