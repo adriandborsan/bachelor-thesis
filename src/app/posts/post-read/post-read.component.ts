@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Post, PostResponse } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -7,24 +7,86 @@ import { PostService } from '../post.service';
   templateUrl: './post-read.component.html',
   styleUrls: ['./post-read.component.scss']
 })
-export class PostReadComponent implements OnInit{
+export class PostReadComponent implements OnInit {
+  @ViewChildren('sentinel', { read: ViewContainerRef }) sentinel!: QueryList<ViewContainerRef>;
+  posts: Post[] = [];
+  page: number = 0;
+  loading: boolean = false;
+  observer!: IntersectionObserver;
+  noMorePosts: boolean = false;
 
+  constructor(private postService: PostService, private cdRef: ChangeDetectorRef) {
+    this.postService.postsModifiedEventEmitter.subscribe(() => this.refreshData());
+  }
 
   ngOnInit(): void {
-    this.redreshData();
+    this.refreshData();
   }
 
-  posts:Post[]=[];
+  ngAfterViewInit(): void {
+    this.sentinel.changes.subscribe(() => {
+      if (this.sentinel.first) {
+        this.initializeObserver();
+      }
+    });
 
-  constructor(private postService:PostService){
-    this.postService.postsModifiedEventEmitter.subscribe(()=> this.redreshData());
+    // If the sentinel is already present, initialize the observer
+    if (this.sentinel.first) {
+      this.initializeObserver();
+    }
   }
 
-  redreshData(){
-    this.postService.getPosts().subscribe(postResponse=>{
-      console.log(JSON.stringify(postResponse));
-      this.posts=postResponse.content;
+  initializeObserver(): void {
+    setTimeout(() => {
+      if (this.sentinel.first) {
+        console.log(this.sentinel.first.element.nativeElement); // debugging
+
+        this.observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting && !this.loading&& !this.noMorePosts) {
+            this.loadMoreData();
+          }
+        });
+        this.observer.observe(this.sentinel.first.element.nativeElement);
+      }
+    }, 1000);
+  }
+
+
+
+  refreshData(): void {
+    this.page = 0; // reset the page number
+    this.noMorePosts=false;
+    this.postService.getPosts(this.page).subscribe(postResponse => {
+      this.posts = postResponse.content;
+      this.page++;
     });
   }
 
+  async loadMoreData(): Promise<void> {
+    this.loading = true;
+    this.postService.getPosts(this.page).subscribe(async postResponse => {
+      if (postResponse.content.length === 0) {
+        // There are no more posts to load
+        this.loading = false;
+        this.noMorePosts = true;
+        if (this.observer) {
+          // this.observer.disconnect(); // stop observing when there are no more posts
+        }
+      } else {
+        this.posts = [...this.posts, ...postResponse.content];
+        this.page++;
+        this.loading = false;
+
+        // Trigger change detection and wait for the DOM to update
+        this.cdRef.detectChanges();
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        // Check if the sentinel is still visible
+        const sentinelRect = this.sentinel.first.element.nativeElement.getBoundingClientRect();
+        if (sentinelRect.top <= window.innerHeight && sentinelRect.bottom >= 0 && !this.loading) {
+          this.loadMoreData();
+        }
+      }
+    });
+  }
 }

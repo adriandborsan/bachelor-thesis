@@ -33,6 +33,9 @@ import { LogInterceptor } from './auth/log.interceptor';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginGuard } from './auth/login.guard';
+import { PostSkeletonComponent } from './posts/post-skeleton/post-skeleton.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -68,7 +71,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PostUpdateComponent,
     PostDeleteComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    PostSkeletonComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +101,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatChipsModule,
     CarouselModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [{
       provide: APP_INITIALIZER,

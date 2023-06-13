@@ -16,8 +16,8 @@ export class PostService {
   baseUri = '/api/v1/posts';
   postsModifiedEventEmitter = new EventEmitter();
 
-  getPosts() {
-    return this.http.get<PostResponse>(this.baseUri).pipe(
+  getPosts(page: number) {
+    return this.http.get<PostResponse>(`${this.baseUri}?pageNumber=${page}&pageSize=2`).pipe(
       map((response: PostResponse) => {
         response.content.forEach((post: Post) => {
           post.files.forEach((file: PostFile) => {

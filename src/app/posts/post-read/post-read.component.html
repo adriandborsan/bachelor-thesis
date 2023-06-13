@@ -1,8 +1,10 @@
 <div class="button-wrapper">
-  <button mat-raised-button color="accent" (click)="redreshData()">
+  <button mat-raised-button color="accent" (click)="refreshData()">
     Refresh posts
   </button>
 </div>
 <div class="posts" *ngFor="let post of posts">
   <app-post [post]="post"></app-post>
 </div>
+
+<app-post-skeleton #sentinel [noMorePosts]="noMorePosts"></app-post-skeleton>
