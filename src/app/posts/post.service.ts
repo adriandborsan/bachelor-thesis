@@ -70,6 +70,12 @@ export class PostService {
       .pipe(catchError((error) => this.handleError(error)));
   }
 
+  report(id: number) {
+    return this.http
+      .post<any>(`${this.baseUri}/${id}/report`,{})
+      .pipe(catchError((error) => this.handleError(error)))
+  }
+
   deletePost(id: number) {
     const dialogRef = this.dialog.open(PostDeleteComponent, { data: id });
 

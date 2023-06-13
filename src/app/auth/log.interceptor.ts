@@ -3,17 +3,28 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LogInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // console.log('Headers: ', request.headers.keys().map(key => `${key}: ${request.headers.get(key)}`));
-        return next.handle(request);
-  }
+    if (request.url.includes('/api')) {
+        return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
+            if (error.status === 401) {
+                this.router.navigate(['/login']);
+            }
+            return throwError(() => error);
+        }));
+    }
+    // if the request does not match '/api', it passes through without any intervention
+    return next.handle(request);
+}
+
 }

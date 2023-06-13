@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-post',
@@ -14,7 +15,7 @@ export class PostComponent implements OnInit{
   @Input()
   post!: Post;
 
-  constructor(private postService:PostService,private authService:AuthService){}
+  constructor(private snackBar: MatSnackBar,private postService:PostService,private authService:AuthService){}
   async ngOnInit(): Promise<void> {
     this.username = (await this.authService.getUsername()).username;
   }
@@ -26,6 +27,14 @@ export class PostComponent implements OnInit{
   edit(){
     this.postService.edit(this.post.id);
   }
+
+  report() {
+    this.postService.report(this.post.id).subscribe((value: any) => {
+      this.snackBar.open('Post reported successfully!', 'Close', {
+        duration: 2000,
+      });
+    });
+    }
 
   public getFileType(mimeType: string): string {
     if (mimeType.startsWith('image')) {

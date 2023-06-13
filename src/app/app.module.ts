@@ -31,7 +31,8 @@ import { environment } from 'src/environments/environment';
 import { MatChipsModule } from '@angular/material/chips';
 import { LogInterceptor } from './auth/log.interceptor';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoginGuard } from './auth/login.guard';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -95,7 +96,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     MatChipsModule,
     CarouselModule,
-    BrowserAnimationsModule, // Add this line
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [{
       provide: APP_INITIALIZER,
@@ -109,7 +111,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true
     },
     AuthService,
-    AuthGuard
+    AuthGuard,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })
