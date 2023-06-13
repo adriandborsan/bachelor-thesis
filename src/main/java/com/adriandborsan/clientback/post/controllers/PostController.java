@@ -25,6 +25,11 @@ public class PostController {
         return postService.findAll(pageNumber, pageSize, sortBy, order);
     }
 
+    @PostMapping("/{id}/report")
+    public void create(@PathVariable Long id) {
+        postService.report(id);
+    }
+
     @PostMapping
     public void create(@ModelAttribute PostDto postDto) {
         postService.create(postDto);

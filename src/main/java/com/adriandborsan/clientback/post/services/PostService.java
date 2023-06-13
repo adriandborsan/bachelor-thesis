@@ -4,7 +4,10 @@ import com.adriandborsan.clientback.post.dto.PostDto;
 import com.adriandborsan.clientback.post.dto.UpdatePostDto;
 import com.adriandborsan.clientback.post.entities.FileEntity;
 import com.adriandborsan.clientback.post.entities.Post;
+import com.adriandborsan.clientback.post.entities.Report;
 import com.adriandborsan.clientback.post.repositories.PostRepository;
+import com.adriandborsan.clientback.post.repositories.ReportRepository;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,13 +24,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
     private final MinioService minioService;
+    private final ReportRepository reportRepository;
 
-    public PostService(PostRepository postRepository, MinioService minioService) {
-        this.postRepository = postRepository;
-        this.minioService = minioService;
+    public void report(Long postId) {
+        Report report = new Report();
+        report.setPostId(postId);
+        reportRepository.save(report);
     }
 
     public String getCurrentUserId() {
