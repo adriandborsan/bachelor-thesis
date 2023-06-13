@@ -29,6 +29,9 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatButtonModule} from '@angular/material/button';
+import { ReportComponent } from './report/report.component';
+import { PostComponent } from './report/post/post.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -62,7 +65,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     LogTableComponent,
     ReactiveLogComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    ReportComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +93,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatNativeDateModule,
     KeycloakAngularModule,
     MatChipsModule,
+    CarouselModule
   ],
   providers: [{
     provide: APP_INITIALIZER,
