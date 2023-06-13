@@ -40,6 +40,30 @@ spec:
                   name: mongo-secret
                   key: mongo_root_password
                   
+            - name: MYSQL_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: db_host
+                  
+            - name: MYSQL_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_database
+            
+            - name: MYSQL_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_user
+            
+            - name: MYSQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_password
+                  
             - name: RABBIT_HOST
               valueFrom:
                 configMapKeyRef:
@@ -63,6 +87,30 @@ spec:
                 configMapKeyRef:
                   name: adminback-config
                   key: issuer_url
+            
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config
+                  key: minio_root_user
+                  
+            - name: MINIO_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+            
+            - name: MINIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_url
+            
+            - name: MINIO_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_bucket
 ---
 apiVersion: v1
 kind: Service
