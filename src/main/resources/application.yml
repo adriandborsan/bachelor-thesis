@@ -8,3 +8,8 @@ spring:
       ddl-auto: update
   rabbitmq:
     host: ${RABBIT_HOST}
+  data:
+    neo4j:
+      uri: ${NEO4J_URI}
+      username: ${NEO4J_USERNAME}
+      password: ${NEO4J_PASSWORD}

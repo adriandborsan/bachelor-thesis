@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
     @Id
     private String id;
-    private String username;
+    private String displayUsername;
 }
