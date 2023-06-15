@@ -81,26 +81,26 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             <div className="container">
                 <div className="bs-sidebar col-sm-3">
                     <ul>
-                        <li className={clsx(active === "account" && "active")}>
+                        {/* <li className={clsx(active === "account" && "active")}>
                             <a href={url.accountUrl}>{msg("account")}</a>
-                        </li>
+                        </li> */}
                         {features.passwordUpdateSupported && (
                             <li className={clsx(active === "password" && "active")}>
                                 <a href={url.passwordUrl}>{msg("password")}</a>
                             </li>
                         )}
-                        <li className={clsx(active === "totp" && "active")}>
+                        {/* <li className={clsx(active === "totp" && "active")}>
                             <a href={url.totpUrl}>{msg("authenticator")}</a>
                         </li>
                         {features.identityFederation && (
                             <li className={clsx(active === "social" && "active")}>
                                 <a href={url.socialUrl}>{msg("federatedIdentity")}</a>
                             </li>
-                        )}
+                        )} */}
                         <li className={clsx(active === "sessions" && "active")}>
                             <a href={url.sessionsUrl}>{msg("sessions")}</a>
                         </li>
-                        <li className={clsx(active === "applications" && "active")}>
+                        {/* <li className={clsx(active === "applications" && "active")}>
                             <a href={url.applicationsUrl}>{msg("applications")}</a>
                         </li>
                         {features.log && (
@@ -112,7 +112,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             <li className={clsx(active === "authorization" && "active")}>
                                 <a href={url.resourceUrl}>{msg("myResources")}</a>
                             </li>
-                        )}
+                        )} */}
                     </ul>
                 </div>
 

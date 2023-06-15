@@ -1,4 +1,4 @@
-FROM node:18 as keycloakify_jar_builder
+FROM node:18-buster as keycloakify_jar_builder
 
 RUN apt-get update && \
     apt-get install -y openjdk-11-jdk && \
