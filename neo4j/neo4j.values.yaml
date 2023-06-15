@@ -1,0 +1,9 @@
+neo4j:
+  name: my-standalone
+  password: "12345678"
+volumes:
+  data:
+    mode: defaultStorageClass
+    defaultStorageClass:
+      requests:
+        storage: 1G
