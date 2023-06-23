@@ -1,6 +1,6 @@
-package com.adriandborsan.clientback.ticket.repositories;
+package com.adriandborsan.clientback.post.ticket.repositories;
 
-import com.adriandborsan.clientback.ticket.entities.Ticket;
+import com.adriandborsan.clientback.post.ticket.entities.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

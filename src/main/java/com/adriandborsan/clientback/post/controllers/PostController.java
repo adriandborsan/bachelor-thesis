@@ -2,9 +2,10 @@ package com.adriandborsan.clientback.post.controllers;
 
 import com.adriandborsan.clientback.post.dto.PostDto;
 import com.adriandborsan.clientback.post.dto.UpdatePostDto;
-import com.adriandborsan.clientback.post.entities.Post;
+import com.adriandborsan.clientback.post.entities.PostEntity;
 import com.adriandborsan.clientback.post.services.PostService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,11 +19,8 @@ public class PostController {
     }
 
     @GetMapping
-    public Page<Post> findAll(@RequestParam(defaultValue = "0", required = false) int pageNumber,
-                              @RequestParam(defaultValue = "100", required = false) int pageSize,
-                              @RequestParam(defaultValue = "id", required = false) String sortBy,
-                              @RequestParam(defaultValue = "asc", required = false) String order) {
-        return postService.findAll(pageNumber, pageSize, sortBy, order);
+    public Page<PostEntity> findAll(Pageable pageable) {
+        return postService.findAll(pageable);
     }
 
     @PostMapping("/{id}/report")
@@ -31,12 +29,12 @@ public class PostController {
     }
 
     @PostMapping
-    public void create(@ModelAttribute PostDto postDto) {
-        postService.create(postDto);
+    public PostEntity create(@ModelAttribute PostDto postDto) {
+      return  postService.create(postDto);
     }
 
     @GetMapping("/{id}")
-    public Post findById(@PathVariable Long id) {
+    public PostEntity findById(@PathVariable Long id) {
         return postService.findById(id);
     }
 
@@ -46,7 +44,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public void update(@ModelAttribute UpdatePostDto newPost, @PathVariable Long id) {
-        postService.update(newPost, id);
+    public PostEntity update(@ModelAttribute UpdatePostDto newPost, @PathVariable Long id) {
+       return postService.update(newPost, id);
     }
 }

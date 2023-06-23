@@ -1,8 +1,8 @@
-package com.adriandborsan.clientback.ticket.services;
+package com.adriandborsan.clientback.post.ticket.services;
 
 import com.adriandborsan.clientback.post.entities.Report;
-import com.adriandborsan.clientback.ticket.entities.Ticket;
-import com.adriandborsan.clientback.ticket.repositories.TicketRepository;
+import com.adriandborsan.clientback.post.ticket.entities.Ticket;
+import com.adriandborsan.clientback.post.ticket.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

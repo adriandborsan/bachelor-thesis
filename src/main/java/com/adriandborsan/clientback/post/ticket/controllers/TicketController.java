@@ -1,7 +1,7 @@
-package com.adriandborsan.clientback.ticket.controllers;
+package com.adriandborsan.clientback.post.ticket.controllers;
 
-import com.adriandborsan.clientback.ticket.entities.Ticket;
-import com.adriandborsan.clientback.ticket.services.TicketService;
+import com.adriandborsan.clientback.post.ticket.entities.Ticket;
+import com.adriandborsan.clientback.post.ticket.services.TicketService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -18,6 +18,7 @@ public class MinioService {
 
     public void save(MultipartFile file, String uniqueFileName) {
         try {
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"+bucket);
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucket)

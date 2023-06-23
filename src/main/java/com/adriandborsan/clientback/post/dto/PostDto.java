@@ -1,6 +1,5 @@
 package com.adriandborsan.clientback.post.dto;
 
-import com.adriandborsan.clientback.post.entities.Post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,11 +16,4 @@ public class PostDto {
     @NonNull  private String message;
     private List<MultipartFile> files=new ArrayList<>();
 
-
-    public Post toEntity() {
-        Post post = new Post();
-        post.setTitle(this.title);
-        post.setMessage(this.message);
-        return post;
-    }
 }

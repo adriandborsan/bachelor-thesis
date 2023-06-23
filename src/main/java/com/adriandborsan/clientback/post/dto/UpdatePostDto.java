@@ -1,6 +1,6 @@
 package com.adriandborsan.clientback.post.dto;
 
-import com.adriandborsan.clientback.post.entities.Post;
+import com.adriandborsan.clientback.post.entities.PostEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +18,10 @@ public class UpdatePostDto {
     private List<Long> fileIdsToKeep=new ArrayList<>();
     private List<MultipartFile> newFiles=new ArrayList<>();
 
-    public Post toEntity() {
-        Post post = new Post();
-        post.setTitle(this.title);
-        post.setMessage(this.message);
-        return post;
+    public PostEntity toEntity() {
+        PostEntity postEntity = new PostEntity();
+        postEntity.setTitle(this.title);
+        postEntity.setMessage(this.message);
+        return postEntity;
     }
 }

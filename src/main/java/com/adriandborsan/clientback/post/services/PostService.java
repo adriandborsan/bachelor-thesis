@@ -1,24 +1,27 @@
 package com.adriandborsan.clientback.post.services;
 
+import com.adriandborsan.clientback.nodes.PostNode;
+import com.adriandborsan.clientback.nodes.PostNodeRepository;
+import com.adriandborsan.clientback.nodes.UserNode;
+import com.adriandborsan.clientback.nodes.UserNodeRepository;
 import com.adriandborsan.clientback.post.dto.PostDto;
 import com.adriandborsan.clientback.post.dto.UpdatePostDto;
 import com.adriandborsan.clientback.post.entities.FileEntity;
-import com.adriandborsan.clientback.post.entities.Post;
+import com.adriandborsan.clientback.post.entities.PostEntity;
 import com.adriandborsan.clientback.post.entities.Report;
-import com.adriandborsan.clientback.post.repositories.PostRepository;
+import com.adriandborsan.clientback.post.entities.UserEntity;
+import com.adriandborsan.clientback.post.repositories.PostEntityRepository;
 import com.adriandborsan.clientback.post.repositories.ReportRepository;
+import com.adriandborsan.clientback.post.repositories.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,9 +29,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    private final PostRepository postRepository;
+    private final PostEntityRepository postEntityRepository;
     private final MinioService minioService;
     private final ReportRepository reportRepository;
+    private final UserEntityRepository userEntityRepository;
+    private final UserNodeRepository userNodeRepository;
+    private final PostNodeRepository postNodeRepository;
+
 
     public void report(Long postId) {
         Report report = new Report();
@@ -37,26 +44,39 @@ public class PostService {
     }
 
     public String getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
-        Jwt jwt = jwtAuthenticationToken.getToken();
-        return jwt.getClaims().get("sub").toString();
+        JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        return (String) authentication.getToken().getClaims().get("sub");
     }
 
-    public Page<Post> findAll(int pageNumber, int pageSize, String sortBy, String order) {
-        Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-        return postRepository.findAll(PageRequest.of(pageNumber, pageSize, sort));
+    //@
+    public Page<PostEntity> findAll(Pageable pageable) {
+        return postEntityRepository.findAll(pageable);
     }
 
-    public void create(PostDto postDto) {
-        Post post = postDto.toEntity();
-        post.setFiles(postDto.getFiles().stream().map(this::saveFile).toList());
-        postRepository.save(post);
+    //@
+    public PostEntity create(PostDto postDto) {
+        String currentUserId = getCurrentUserId();
+        UserEntity userEntity = userEntityRepository.findById(currentUserId).get();
+        UserNode userNode = userNodeRepository.findById(currentUserId).get();
+        PostEntity postEntity = new PostEntity();
+        postEntity.setTitle(postDto.getTitle());
+        postEntity.setMessage(postDto.getMessage());
+        postEntity.setCreatedAt(LocalDateTime.now());
+        postEntity.setUserEntity(userEntity);
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaAAAAaaAA"+postEntity);
+        postEntity = postEntityRepository.save(postEntity);
+        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"+postEntity);
+        PostNode postNode = new PostNode(postEntity.getId());
+        postNode.setAuthor(userNode);
+        postNode = postNodeRepository.save(postNode);
+        postEntity.setFiles(postDto.getFiles().stream().map(this::saveFile).collect(Collectors.toList()));
+        postEntity = postEntityRepository.save(postEntity);
+        return postEntity;
     }
 
-    @NotNull
+    //@
     private FileEntity saveFile(MultipartFile multipartFile) {
-        String uniqueFileName ="/"+ getCurrentUserId() + "/" + UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
+        String uniqueFileName = "/" + getCurrentUserId() + "/" + UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
         minioService.save(multipartFile, uniqueFileName);
         FileEntity fileEntity = new FileEntity();
         fileEntity.setPath(uniqueFileName);
@@ -65,41 +85,47 @@ public class PostService {
         return fileEntity;
     }
 
-    public void update(UpdatePostDto updatePostDto, Long id) {
-        Post existingPost = postRepository.findById(id)
-                .orElseGet(updatePostDto::toEntity);
+    //@
+    public PostEntity update(UpdatePostDto updatePostDto, Long id) {
+        PostEntity existingPostEntity = postEntityRepository.findById(id).get();
 
         if (updatePostDto.getTitle() != null) {
-            existingPost.setTitle(updatePostDto.getTitle());
+            existingPostEntity.setTitle(updatePostDto.getTitle());
         }
         if (updatePostDto.getMessage() != null) {
-            existingPost.setMessage(updatePostDto.getMessage());
+            existingPostEntity.setMessage(updatePostDto.getMessage());
         }
 
-        List<FileEntity> filesToDelete = existingPost.getFiles().stream()
+        List<FileEntity> filesToDelete = existingPostEntity.getFiles().stream()
                 .filter(fileEntity -> !updatePostDto.getFileIdsToKeep().contains(fileEntity.getId()))
                 .collect(Collectors.toList());
 
         filesToDelete.forEach(fileEntity -> minioService.delete(fileEntity.getPath()));
-        existingPost.getFiles().removeAll(filesToDelete);
+        existingPostEntity.getFiles().removeAll(filesToDelete);
 
         updatePostDto.getNewFiles().forEach(multipartFile -> {
             FileEntity fileEntity = saveFile(multipartFile);
-            existingPost.getFiles().add(fileEntity);
+            existingPostEntity.getFiles().add(fileEntity);
         });
 
-        postRepository.save(existingPost);
+       return postEntityRepository.save(existingPostEntity);
     }
 
-    public Post findById(Long id) {
-        return postRepository.findById(id).get();
+    //@
+    public PostEntity findById(Long id) {
+        return postEntityRepository.findById(id).get();
     }
 
+    //@
     public void deleteById(Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-        post.getFiles().forEach(fileEntity -> minioService.delete(fileEntity.getPath()));
-        postRepository.deleteById(id);
+        PostEntity postEntity = postEntityRepository.findById(id).get();
+        postEntity.getFiles().forEach(fileEntity -> minioService.delete(fileEntity.getPath()));
+        postNodeRepository.delete(postNodeRepository.findById(id).get());
+        postEntityRepository.delete(postEntity);
+    }
+
+    public Page<PostEntity> readAllPostsByUser(String userId, Pageable pageable) {
+        return postEntityRepository.findAllByUserEntityId(userId, pageable);
     }
 
 }

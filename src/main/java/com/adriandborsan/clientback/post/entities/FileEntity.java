@@ -2,17 +2,17 @@ package com.adriandborsan.clientback.post.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
+//PostAttachment sounds a better name but i am not sure so yeah hihi haha, abracadabra
 public class FileEntity {
 
     @Id

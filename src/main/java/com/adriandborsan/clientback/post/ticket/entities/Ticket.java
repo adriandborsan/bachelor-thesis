@@ -1,4 +1,4 @@
-package com.adriandborsan.clientback.ticket.entities;
+package com.adriandborsan.clientback.post.ticket.entities;
 
 import com.adriandborsan.clientback.post.entities.Report;
 import jakarta.persistence.*;

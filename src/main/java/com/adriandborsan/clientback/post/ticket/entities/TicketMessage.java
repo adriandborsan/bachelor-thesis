@@ -1,4 +1,4 @@
-package com.adriandborsan.clientback.ticket.entities;
+package com.adriandborsan.clientback.post.ticket.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
