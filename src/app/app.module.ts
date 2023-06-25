@@ -35,7 +35,51 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginGuard } from './auth/login.guard';
 import { PostSkeletonComponent } from './posts/post-skeleton/post-skeleton.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NgcCookieConsentModule, NgcCookieConsentConfig} from 'ngx-cookieconsent';
+import { NavbarComponent } from './navbar/navbar.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserEditDialogComponent } from './user-profile/user-edit-dialog/user-edit-dialog.component';
 
+
+
+
+
+
+
+
+const cookieConfig:NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'localhost'// it is recommended to set your domain, for cookies to work properly
+  },
+  palette: {
+    popup: {
+      background: '#000'
+    },
+    button: {
+      background: '#f1d600'
+    }
+  },
+  theme: 'edgeless',
+  type: 'opt-out',
+  layout: 'my-custom-layout',
+  layouts: {
+    "my-custom-layout": '{{buttons}}'
+  },
+  elements:{
+    buttons: `
+    <span id="cookieconsent:desc" class="cc-message">{{message}}
+     <button (click)="delclineCookies()">Decline</button>
+     <button (click)="customomizeCookies()">Customize Cookies</button>
+     <button (click)="acceptCookies()">Accept</button>
+    </span>
+    `,
+  },
+  content:{
+    message: 'By using our site, you acknowledge that you have read and understand our '
+  }
+};
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -72,9 +116,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PostDeleteComponent,
     LoginComponent,
     HomeComponent,
-    PostSkeletonComponent
+    PostSkeletonComponent,
+    NavbarComponent,
+    UserProfileComponent,
+    PageNotFoundComponent,
+    UserEditDialogComponent
   ],
   imports: [
+    NgcCookieConsentModule.forRoot(cookieConfig),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -102,7 +151,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CarouselModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ],
   providers: [{
       provide: APP_INITIALIZER,

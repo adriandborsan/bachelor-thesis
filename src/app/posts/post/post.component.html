@@ -1,20 +1,24 @@
 <mat-card>
   <mat-card-header>
-    <div mat-card-avatar class="header-image"></div>
-    <mat-card-subtitle>user is {{username}}</mat-card-subtitle>
-    <mat-card-title>{{ post.title }}</mat-card-title>
+      <img mat-card-avatar [src]="pic" alt="" (error)="setDefaultImage()" class="header-image clickable" (click)="navigateToProfile(post.userEntity.id)">
+      <mat-card-subtitle class="clickable" (click)="navigateToProfile(post.userEntity.id)">user is {{post.userEntity.displayUsername}}</mat-card-subtitle>
+
+    <mat-card-title> title post:{{ post.title }}</mat-card-title>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="edit()">
-        <mat-icon> border_color</mat-icon>
-        <span>Edit</span>
-      </button>
-      <button mat-menu-item (click)="delete()">
-        <mat-icon>delete</mat-icon>
-        <span>Delete</span>
-      </button>
+      <ng-container *ngIf="authService.userProfileLoaded$| async ">
+        <button *ngIf="post.userEntity.id == authService.getCurrentUser().id" mat-menu-item (click)="edit()">
+          <mat-icon> border_color</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="post.userEntity.id == authService.getCurrentUser().id" mat-menu-item (click)="delete()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+        </ng-container>
+
       <button mat-menu-item (click)="report()">
         <mat-icon>report</mat-icon>
         <span>Report</span>

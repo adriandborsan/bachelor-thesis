@@ -3,5 +3,6 @@ export const environment = {
   issuer: "http://keycloak.hehe",
   client: "testfront",
   minioUrl: "http://minio.hehe",
-  bucket: "post-bucket"
+  bucket: "post-bucket",
+  profileBucket: "profile-bucket"
 };

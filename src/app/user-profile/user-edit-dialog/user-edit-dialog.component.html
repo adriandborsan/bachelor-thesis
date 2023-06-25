@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Edit Profile</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="displayUsername">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Bio</mat-label>
+      <textarea matInput formControlName="bio"></textarea>
+    </mat-form-field>
+    <div class="image-preview">
+      <img [src]="profilePicturePreview || data.profilePicture" alt="Profile picture preview">
+    </div>
+    <button mat-raised-button type="button" (click)="fileInput.click()">Choose Profile Picture</button>
+    <input hidden (change)="handleFileInput($event)" #fileInput type="file" id="file" name="profilePictureFile" accept="image/*">
+
+    <button type="submit" mat-raised-button>Submit</button>
+  </form>
+</div>

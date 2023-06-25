@@ -14,7 +14,7 @@ export class HomeComponent {
   }
 
   redirectToAccountService() {
-    const url = this.authService.createAccountUrl();
-    window.location.href = url;
+   this.authService.navigateToAccountSettings();
+
 }
 }

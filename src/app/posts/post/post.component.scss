@@ -2,10 +2,10 @@ mat-card {
   margin: 1em;
 }
 
-.header-image {
-  background-image: url("../../../assets/icons/icon-72x72.png");
-  background-size: cover;
-}
+// .header-image {
+//   background-image: url("../../../assets/icons/icon-72x72.png");
+//   background-size: cover;
+// }
 
 button {
   margin-left: auto;
@@ -26,3 +26,13 @@ video {
 }
 
 
+
+.header-image {
+  width: 4em; // adjust this size as needed
+  height: 4em; // adjust this size as needed
+  border-radius: 50%;
+}
+
+.clickable {
+  cursor: pointer;
+}

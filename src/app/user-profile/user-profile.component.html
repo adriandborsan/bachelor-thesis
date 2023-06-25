@@ -1,0 +1,22 @@
+<mat-card class="user-profile-card">
+  <mat-card-header>
+    <img mat-card-avatar [src]="pic" alt="" (error)="setDefaultImage()" class="header-image clickable" >
+    <ng-container *ngIf="authService.userProfileLoaded$| async ">
+    <button mat-raised-button  color="primary" *ngIf="userId == authService.getCurrentUser().id" (click)="editProfile()">edit profile</button>
+    </ng-container>
+      <mat-card-title>{{ userEntity?.displayUsername }}</mat-card-title>
+      <mat-card-subtitle>{{ userEntity?.firstName }} {{ userEntity?.lastName }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+      <p>Bio: {{ userEntity?.bio }}</p>
+      <p>Joined: {{ userEntity?.createdAt | date }}</p>
+  </mat-card-content>
+</mat-card>
+
+<div class="container">
+  <ng-container *ngIf="authService.userProfileLoaded$| async ">
+    <app-post-create *ngIf="userId == authService.getCurrentUser().id"></app-post-create>
+  </ng-container>
+
+  <app-post-read [userId]="userId"> </app-post-read>
+</div>

@@ -4,6 +4,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,16 @@ const routes: Routes = [
     canActivate: [LoginGuard],
     component: LoginComponent,
   },
+  {
+    path: 'users/:id',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

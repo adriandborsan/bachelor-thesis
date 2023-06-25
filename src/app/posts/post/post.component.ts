@@ -4,6 +4,9 @@ import { Post } from '../post.model';
 import { PostService } from '../post.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Observable, of, startWith, switchMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-post',
@@ -11,13 +14,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit{
+
   username: string| undefined="";
   @Input()
   post!: Post;
 
-  constructor(private snackBar: MatSnackBar,private postService:PostService,private authService:AuthService){}
-  async ngOnInit(): Promise<void> {
-    this.username = (await this.authService.getUsername()).username;
+  constructor(private snackBar: MatSnackBar,private postService:PostService,public authService:AuthService,private router: Router){
+
+  }
+
+  pic: string = '/assets/profile.jpeg';
+  setDefaultImage() {
+    if (this.pic !== '/assets/profile.jpeg') {
+      this.pic = '/assets/profile.jpeg';
+    }
+  }
+  ngOnInit() {
+    if (this.post.userEntity.profilePicture && this.post.userEntity.profilePicture !== 'null') {
+      this.post.userEntity.profilePicture = `${environment.minioUrl}/${environment.profileBucket}${  this.post.userEntity.profilePicture }`;
+      this.pic = this.post.userEntity.profilePicture;
+    }
   }
 
   delete(){
@@ -73,4 +89,8 @@ export class PostComponent implements OnInit{
     },
     nav: true
   }
+
+  navigateToProfile(userId: string) {
+    this.router.navigate(['/users', userId]);
+}
 }

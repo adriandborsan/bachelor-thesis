@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Post, PostResponse } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -8,6 +8,7 @@ import { PostService } from '../post.service';
   styleUrls: ['./post-read.component.scss']
 })
 export class PostReadComponent implements OnInit {
+  @Input() userId: string | null = null;
   @ViewChildren('sentinel', { read: ViewContainerRef }) sentinel!: QueryList<ViewContainerRef>;
   posts: Post[] = [];
   page: number = 0;
@@ -39,7 +40,7 @@ export class PostReadComponent implements OnInit {
   initializeObserver(): void {
     setTimeout(() => {
       if (this.sentinel.first) {
-        console.log(this.sentinel.first.element.nativeElement); // debugging
+        // //console.log(this.sentinel.first.element.nativeElement); // debugging
 
         this.observer = new IntersectionObserver((entries) => {
           if (entries[0].isIntersecting && !this.loading&& !this.noMorePosts) {
@@ -55,8 +56,13 @@ export class PostReadComponent implements OnInit {
 
   refreshData(): void {
     this.page = 0; // reset the page number
-    this.noMorePosts=false;
-    this.postService.getPosts(this.page).subscribe(postResponse => {
+    this.noMorePosts = false;
+
+    const posts$ = this.userId
+      ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}])
+      : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}]);
+
+    posts$.subscribe(postResponse => {
       this.posts = postResponse.content;
       this.page++;
     });
@@ -64,7 +70,10 @@ export class PostReadComponent implements OnInit {
 
   async loadMoreData(): Promise<void> {
     this.loading = true;
-    this.postService.getPosts(this.page).subscribe(async postResponse => {
+    const posts$ = this.userId
+    ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}])
+    : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}]);
+    posts$.subscribe(async postResponse => {
       if (postResponse.content.length === 0) {
         // There are no more posts to load
         this.loading = false;

@@ -10,6 +10,7 @@ import { PostService } from '../post.service';
 })
 export class PostCreateComponent {
   files: File[] = [];
+  loading=false;
   constructor(private postService:PostService,private fb:FormBuilder){}
 
   createPostForm=this.fb.group({
@@ -43,6 +44,9 @@ onFormSubmit() {
     formData.append('files', file, file.name);
   });
 
-  this.postService.addPost(formData);
+  this.loading=true;
+  this.postService.addPost(formData).subscribe(post => {
+    this.loading = false;
+  });
 }
 }

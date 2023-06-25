@@ -18,9 +18,22 @@ export interface Post {
   id: number;
   title: string;
   message: string;
+  userEntity: UserEntity;
   files: PostFile[];
+  createdAt: string;
 }
 
+export interface UserEntity {
+  id: string
+  displayUsername: string
+  firstName: string
+  lastName: string
+  bio: string
+  profilePicture: string
+  createdAt: string
+  updatedAt: string
+  profilePictureFile?: File;
+}
 
 export interface UpdatePost {
   title: string;
