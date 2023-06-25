@@ -3,6 +3,15 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+  datasource:
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  neo4j:
+    uri: ${NEO4J_URI}
+    authentication:
+      username: ${NEO4J_USERNAME}
+      password: ${NEO4J_PASSWORD}
   authmysql1:
     url: jdbc:mysql://${DB_HOST}/${DB_NAME}
     username: ${DB_USERNAME}
@@ -15,9 +24,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
 
   rabbitmq:
     host: ${RABBIT_HOST}

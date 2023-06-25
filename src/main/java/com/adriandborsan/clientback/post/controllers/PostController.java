@@ -6,6 +6,8 @@ import com.adriandborsan.clientback.post.entities.PostEntity;
 import com.adriandborsan.clientback.post.services.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,12 +41,19 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        if (!postService.findById(id).getUserEntity().getId().equals(postService.getCurrentUserId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         postService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public PostEntity update(@ModelAttribute UpdatePostDto newPost, @PathVariable Long id) {
-       return postService.update(newPost, id);
+    public ResponseEntity<PostEntity> update(@ModelAttribute UpdatePostDto newPost, @PathVariable Long id) {
+        if (!postService.findById(id).getUserEntity().getId().equals(postService.getCurrentUserId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+       return ResponseEntity.ok(postService.update(newPost, id));
     }
 }
