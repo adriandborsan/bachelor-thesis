@@ -1,6 +1,6 @@
 neo4j:
-  name: my-standalone
-  password: "12345678"
+  name: neo4j-deployment
+  password: "hahahehe"
 volumes:
   data:
     mode: defaultStorageClass
