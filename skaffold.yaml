@@ -1,7 +1,7 @@
 apiVersion: skaffold/v2beta26
 kind: Config
 metadata:
-  name: clientback
+  name: adminback
 
 build:
   artifacts:

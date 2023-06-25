@@ -17,6 +17,7 @@ public class Report {
     @GeneratedValue
     private Long id;
 
+    private String adminId;
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
 

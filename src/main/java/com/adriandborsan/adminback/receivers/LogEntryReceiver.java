@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Logger;
+
 @RabbitListener(queues = "${spring.rabbitmq.queue}")
 @Component
 public class LogEntryReceiver {
@@ -18,6 +20,7 @@ public class LogEntryReceiver {
 
     @RabbitHandler
     public void receive(@Payload LogEntry logEntry) {
+        Logger.getAnonymousLogger().info("received new log:\t"+logEntry);
         logEntryService.save(logEntry);
     }
 }

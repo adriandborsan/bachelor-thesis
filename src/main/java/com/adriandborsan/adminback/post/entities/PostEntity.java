@@ -3,19 +3,22 @@ package com.adriandborsan.adminback.post.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
-public class Post {
+public class PostEntity {
     @Id
     @GeneratedValue
     private Long id;
-    @NonNull  private String title;
-    @NonNull  private String message;
+    private String title;
+    private String message;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileEntity> files;
+
+    @ManyToOne
+    private UserEntity userEntity;
+    private LocalDateTime createdAt;
+
 }

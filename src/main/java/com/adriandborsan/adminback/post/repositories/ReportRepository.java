@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ReportRepository extends JpaRepository<Report,Long> {
     Optional<Report> findFirstByStatusOrderByCreatedDateAsc(Report.ReportStatus status);
+
+    Optional<Report> findFirstByAdminIdAndStatus(String adminId, Report.ReportStatus reportStatus);
 }

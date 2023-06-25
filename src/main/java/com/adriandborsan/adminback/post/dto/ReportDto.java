@@ -1,6 +1,6 @@
 package com.adriandborsan.adminback.post.dto;
 
-import com.adriandborsan.adminback.post.entities.Post;
+import com.adriandborsan.adminback.post.entities.PostEntity;
 import com.adriandborsan.adminback.post.entities.Report;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ public class ReportDto {
 
     private Report.ReportStatus status;
 
-    private Post post;
+    private PostEntity post;
 
     private LocalDateTime createdDate;
 
