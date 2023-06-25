@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ReportService } from './report.service';
 import { Post,Report } from './Report.model';
 
@@ -8,9 +8,9 @@ import { Post,Report } from './Report.model';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit{
-  post!: Post;
-  id!:number;
-  constructor(private reportService: ReportService) {
+  post?: Post;
+  id?:number;
+  constructor(private reportService: ReportService, private cdRef: ChangeDetectorRef) {
     this.loadNextReport();
   }
 
@@ -19,29 +19,29 @@ export class ReportComponent implements OnInit{
   }
 
   onReview(violation: boolean): void {
-    this.reportService.reviewReport(this.id, {violation}).subscribe(() => {
+    this.reportService.reviewReport(this.id!, {violation}).subscribe(() => {
       this.loadNextReport();
     });
   }
 
 
-  private loadNextReport(): void {
+   loadNextReport(): void {
     this.reportService.getOldestPendingReport().subscribe({
-      next: (report: Report) => {
-        console.log(report);
-        this.post = report.post;
-        this.id = report.id;
+      next: (report: Report | null) => {
+        if (report) {
+          this.post = report.post;
+          this.id = report.id;
+        } else {
+          this.post = undefined;
+          this.id = undefined;
+          console.log('No report to process');
+        }
+        this.cdRef.detectChanges(); // manually trigger change detection
       },
       error: (error: any) => {
         console.log('An error occurred:', error);
-        // Handle errors
-      },
-      complete: () => {
-        console.log('No report to process');
-        // Handle the no report case
       }
     });
   }
-
 
 }

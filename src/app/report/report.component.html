@@ -1,7 +1,16 @@
-<mat-card>
-  <mat-card-content>
-    <button mat-raised-button color="primary" (click)="onReview(true)">Violates rules</button>
-    <button mat-raised-button color="accent" (click)="onReview(false)">Does not violate rules</button>
-    <app-post *ngIf="post" [post]="post"></app-post>
-  </mat-card-content>
-</mat-card>
+<button mat-raised-button color="primary" (click)="loadNextReport()">refresh report</button>
+<ng-container *ngIf="post; then postTemplate else noReports"></ng-container>
+
+<ng-template #postTemplate>
+  <mat-card>
+    <mat-card-content>
+      <button mat-raised-button color="primary" (click)="onReview(true)">Violates rules</button>
+      <button mat-raised-button color="accent" (click)="onReview(false)">Does not violate rules</button>
+      <app-post [post]="post!"></app-post>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<ng-template #noReports>
+  <p>There are no reports</p>
+</ng-template>

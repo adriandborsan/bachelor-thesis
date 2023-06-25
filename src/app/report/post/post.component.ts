@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Post } from '../Report.model';
 
@@ -7,10 +7,17 @@ import { Post } from '../Report.model';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent {
+export class PostComponent implements AfterViewInit {
 
   @Input()
   post!: Post;
+
+  constructor(private cdRef:ChangeDetectorRef) { }
+
+  ngAfterViewInit() {
+    this.cdRef.detectChanges();
+  }
+
   public getFileType(mimeType: string): string {
     if (mimeType.startsWith('image')) {
       return 'image';
@@ -23,9 +30,8 @@ export class PostComponent {
     }
   }
 
-
   customOptions: OwlOptions = {
-    loop: false,
+    loop: true,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
@@ -49,3 +55,4 @@ export class PostComponent {
     nav: true
   }
 }
+

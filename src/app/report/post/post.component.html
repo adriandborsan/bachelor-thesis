@@ -8,33 +8,27 @@
     {{ post.id }} has message
     <p>{{ post.message }}</p>
     <div class="posts" *ngFor="let file of post.files">
-      <p>{{file.id}}</p>
       <p>{{file.mimeType}}</p>
       <p>{{file.originalName}}</p>
-      <p>{{file.path}}</p>
+      <ng-container [ngSwitch]="getFileType(file.mimeType)">
+        <div *ngSwitchCase="'image'" class="square">
+          <img [src]="file.fullPath" />
+        </div>
+        <div *ngSwitchCase="'video'" class="square">
+          <video controls >
+            <source [src]="file.fullPath" type="{{file.mimeType}}">
+          </video>
+        </div>
+        <div *ngSwitchCase="'audio'">
+          <audio controls >
+            <source [src]="file.fullPath" type="{{file.mimeType}}">
+          </audio>
+        </div>
+        <div *ngSwitchDefault>
+          <a [href]="file.fullPath" download>Download {{file.originalName}}</a>
+        </div>
+        <p>aolo</p>
+      </ng-container>
       </div>
-      <owl-carousel-o [options]="customOptions">
-        <ng-template class="posts" *ngFor="let file of post.files" carouselSlide>
-          <ng-container [ngSwitch]="getFileType(file.mimeType)">
-            <div *ngSwitchCase="'image'" class="square">
-              <img [src]="file.fullPath" />
-            </div>
-            <div *ngSwitchCase="'video'" class="square">
-              <video controls >
-                <source [src]="file.fullPath" type="{{file.mimeType}}">
-              </video>
-            </div>
-            <div *ngSwitchCase="'audio'">
-              <audio controls >
-                <source [src]="file.fullPath" type="{{file.mimeType}}">
-              </audio>
-            </div>
-            <div *ngSwitchDefault>
-              <a [href]="file.fullPath" download>Download {{file.originalName}}</a>
-            </div>
-            <p>aolo</p>
-          </ng-container>
-        </ng-template>
-      </owl-carousel-o>
   </mat-card-content>
 </mat-card>

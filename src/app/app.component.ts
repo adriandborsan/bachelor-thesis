@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'adminfront';
+
+  customOptions: OwlOptions = {
+    loop: true,
+    dots: true,
+    responsive: {
+      0: {
+        items: 1
+      }
+    },
+    nav: true
+}
 }

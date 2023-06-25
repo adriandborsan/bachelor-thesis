@@ -17,33 +17,30 @@ export class ReportService {
     return this.http.post<any>(`${this.apiUrl}/${reportId}/review`, review);
   }
 
-  getOldestPendingReport(): Observable<Report> {
+  getOldestPendingReport(): Observable<Report | null> {
     return this.http.get<Report>(this.apiUrl, { observe: 'response' }).pipe(
-      mergeMap((response: HttpResponse<Report>) => {
+      map((response: HttpResponse<Report>) => {
         if (response.status === 204) {
-          return throwError(() => new Error('No report to process'));
+          return null;
         }
 
-        let report = response.body;
+        const report = response.body;
 
         if (!report) {
-          return throwError(() => new Error('No report received'));
+          throw new Error('No report received');
         }
 
         report.post.files.forEach((file: PostFile) => {
           file.fullPath = environment.minioUrl + "/" + environment.bucket + file.path;
         });
 
-        return of(report);
+        return report;
       }),
       catchError(error => {
-        // handle error scenario
-        console.log(error);
-        return throwError(() => error);
+        // Re-throw the original error
+        throw error;
       })
     );
-  }
-
-
+}
 
 }
