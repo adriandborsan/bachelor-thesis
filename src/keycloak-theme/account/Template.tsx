@@ -7,6 +7,7 @@ import { useGetClassName } from "keycloakify/account/lib/useGetClassName";
 import type { KcContext } from "./kcContext";
 import type { I18n } from "./i18n";
 import { assert } from "keycloakify/tools/assert";
+import { useEffect } from "react";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, active, classes, children } = props;
@@ -25,7 +26,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "htmlClassName": undefined,
         "bodyClassName": clsx("admin-console", "user", getClassName("kcBodyClass"))
     });
-
+    useEffect(() => {
+        if (window.location.href !== url.passwordUrl) {
+            window.location.href = url.passwordUrl;
+        }
+    }, []);
     if (!isReady) {
         return null;
     }
@@ -80,39 +85,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
             <div className="container">
                 <div className="bs-sidebar col-sm-3">
-                    <ul>
-                        {/* <li className={clsx(active === "account" && "active")}>
-                            <a href={url.accountUrl}>{msg("account")}</a>
-                        </li> */}
+                    <ul>                    
                         {features.passwordUpdateSupported && (
                             <li className={clsx(active === "password" && "active")}>
                                 <a href={url.passwordUrl}>{msg("password")}</a>
                             </li>
                         )}
-                        {/* <li className={clsx(active === "totp" && "active")}>
-                            <a href={url.totpUrl}>{msg("authenticator")}</a>
-                        </li>
-                        {features.identityFederation && (
-                            <li className={clsx(active === "social" && "active")}>
-                                <a href={url.socialUrl}>{msg("federatedIdentity")}</a>
-                            </li>
-                        )} */}
-                        <li className={clsx(active === "sessions" && "active")}>
-                            <a href={url.sessionsUrl}>{msg("sessions")}</a>
-                        </li>
-                        {/* <li className={clsx(active === "applications" && "active")}>
-                            <a href={url.applicationsUrl}>{msg("applications")}</a>
-                        </li>
-                        {features.log && (
-                            <li className={clsx(active === "log" && "active")}>
-                                <a href={url.logUrl}>{msg("log")}</a>
-                            </li>
-                        )}
-                        {realm.userManagedAccessAllowed && features.authorization && (
-                            <li className={clsx(active === "authorization" && "active")}>
-                                <a href={url.resourceUrl}>{msg("myResources")}</a>
-                            </li>
-                        )} */}
                     </ul>
                 </div>
 
