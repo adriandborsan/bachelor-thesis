@@ -32,7 +32,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { ReportComponent } from './report/report.component';
 import { PostComponent } from './report/post/post.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import {MatToolbarModule} from '@angular/material/toolbar';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -93,7 +93,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatNativeDateModule,
     KeycloakAngularModule,
     MatChipsModule,
-    CarouselModule
+    CarouselModule,
+    MatToolbarModule
   ],
   providers: [{
     provide: APP_INITIALIZER,
