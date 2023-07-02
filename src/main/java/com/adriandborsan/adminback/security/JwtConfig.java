@@ -22,6 +22,8 @@ public class JwtConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/api/v1/reactive/logs")
                 .permitAll()
+                .requestMatchers("/actuator/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
