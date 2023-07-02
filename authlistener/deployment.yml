@@ -88,6 +88,11 @@ spec:
                 secretKeyRef:
                   name: authlistener-secret
                   key: neo4j_auth
+            
+            - name: JAEGER_URL
+              value: "http://jaeger-collector:14268/api/traces"
+            - name: APP_NAME
+              value: "authlistener"
 ---
 apiVersion: v1
 kind: Service

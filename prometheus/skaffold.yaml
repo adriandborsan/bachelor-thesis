@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta15
+kind: Config
+metadata:
+  name: prometheus
+deploy:
+  helm:
+    releases:
+    - name: my-prometheus
+      chartPath: prometheus-community/prometheus
+      valuesFiles:
+      - values.yaml
+      setValues:
+        server.configMapOverrideName: prometheus-config
+  kustomize:
+    paths:
+    - .

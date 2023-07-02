@@ -111,6 +111,11 @@ spec:
                 configMapKeyRef:
                   name: clientback-config
                   key: minio_bucket
+            
+            - name: JAEGER_URL
+              value: "http://jaeger-collector:14268/api/traces"
+            - name: APP_NAME
+              value: "adminback"
 ---
 apiVersion: v1
 kind: Service
