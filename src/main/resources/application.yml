@@ -1,4 +1,19 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+opentracing:
+  jaeger:
+    http-sender:
+      url:  ${JAEGER_URL}
 spring:
+  application:
+    name: ${APP_NAME}
   datasource:
     url: jdbc:mysql://${DB_HOST}/${DB_NAME}
     username: ${DB_USERNAME}
