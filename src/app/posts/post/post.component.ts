@@ -30,9 +30,15 @@ export class PostComponent implements OnInit{
     }
   }
   ngOnInit() {
+    // console.log(this.post.userEntity.profilePicture);
+
     if (this.post.userEntity.profilePicture && this.post.userEntity.profilePicture !== 'null') {
+      if(!this.post.userEntity.profilePicture.startsWith(environment.minioUrl))
+      {
       this.post.userEntity.profilePicture = `${environment.minioUrl}/${environment.profileBucket}${  this.post.userEntity.profilePicture }`;
+      }
       this.pic = this.post.userEntity.profilePicture;
+      console.log(this.post.userEntity.profilePicture);
     }
   }
 
