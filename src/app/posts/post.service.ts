@@ -17,7 +17,7 @@ export class PostService {
   baseProfileUri = '/api/v1/users';
   postsModifiedEventEmitter = new EventEmitter();
 
-  getPosts(page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'asc'}]) {
+  getPosts(page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'desc'}]) {
     // Build the sort parameter
     let sortParam = sorts.map(sort => `${sort.property},${sort.direction}`).join('&sort=');
 
@@ -41,7 +41,7 @@ export class PostService {
   }
 
 
-  getPostsByUser(userId:string,page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'asc'}]) {
+  getPostsByUser(userId:string,page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'desc'}]) {
     // Build the sort parameter
     let sortParam = sorts.map(sort => `${sort.property},${sort.direction}`).join('&sort=');
 

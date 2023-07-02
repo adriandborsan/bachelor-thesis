@@ -59,8 +59,8 @@ export class PostReadComponent implements OnInit {
     this.noMorePosts = false;
 
     const posts$ = this.userId
-      ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}])
-      : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}]);
+      ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'desc'}, {property: 'title', direction: 'desc'}])
+      : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'desc'}, {property: 'title', direction: 'desc'}]);
 
     posts$.subscribe(postResponse => {
       this.posts = postResponse.content;
@@ -71,8 +71,8 @@ export class PostReadComponent implements OnInit {
   async loadMoreData(): Promise<void> {
     this.loading = true;
     const posts$ = this.userId
-    ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}])
-    : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'asc'}, {property: 'title', direction: 'desc'}]);
+    ? this.postService.getPostsByUser(this.userId, this.page, 5, [{property: 'id', direction: 'desc'}, {property: 'title', direction: 'desc'}])
+    : this.postService.getPosts(this.page, 5, [{property: 'id', direction: 'desc'}, {property: 'title', direction: 'desc'}]);
     posts$.subscribe(async postResponse => {
       if (postResponse.content.length === 0) {
         // There are no more posts to load
