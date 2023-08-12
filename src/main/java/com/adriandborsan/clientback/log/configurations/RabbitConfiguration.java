@@ -1,6 +1,6 @@
 package com.adriandborsan.clientback.log.configurations;
 
-import com.adriandborsan.clientback.log.dao.LogEntry;
+import com.adriandborsan.clientback.log.dto.LogEntry;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

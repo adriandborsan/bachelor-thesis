@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-//@Table(name="user_entity")
 public class UserEntity {
     @Id
     private String id;
@@ -18,6 +17,5 @@ public class UserEntity {
     private String bio;
     private String profilePicture;
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 }

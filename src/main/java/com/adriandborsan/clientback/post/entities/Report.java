@@ -28,12 +28,6 @@ public class Report {
         PENDING, UNDER_REVIEW, RESOLVED
     }
 
-    //oare nu e mai bine
-//    public enum ReportStatus {
-//        OPEN,
-//        IN_PROGRESS,
-//        CLOSED
-//    }
 
     @PrePersist
     protected void onCreate() {

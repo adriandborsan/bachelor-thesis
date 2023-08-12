@@ -21,19 +21,13 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	 implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	// implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
 	annotationProcessor 'org.projectlombok:lombok'
 	 implementation 'io.minio:minio:8.5.3'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
-
 }
 
 jar {

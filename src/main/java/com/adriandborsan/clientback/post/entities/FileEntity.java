@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-//PostAttachment sounds a better name but i am not sure so yeah hihi haha, abracadabra
 public class FileEntity {
 
     @Id

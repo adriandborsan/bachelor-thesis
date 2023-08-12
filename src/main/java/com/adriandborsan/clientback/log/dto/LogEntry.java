@@ -1,4 +1,4 @@
-package com.adriandborsan.clientback.log.dao;
+package com.adriandborsan.clientback.log.dto;
 
 import lombok.*;
 import java.time.Instant;

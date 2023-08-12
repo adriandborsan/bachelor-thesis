@@ -1,11 +1,11 @@
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM gradle:7.5.1-jdk17 as builder
 WORKDIR /app
-
-COPY . .
-
-RUN --mount=type=cache,target=/root/.gradle ./gradlew bootJar &&\
-   cd build/libs &&\
-   java -Djarmode=layertools -jar ./*.jar extract
+COPY build.gradle settings.gradle /app/
+RUN gradle clean build --no-daemon || true
+COPY ./ /app/
+RUN --mount=type=cache,target=/root/.gradle gradle build --no-daemon &&\
+    cd build/libs &&\
+    java -Djarmode=layertools -jar ./*.jar extract
 
 FROM eclipse-temurin:17-jre-jammy
 ARG PATH=/app/build/libs
