@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authlistener-deployment
+spec:
+  selector:
+    matchLabels:
+      app: authlistener
+  template:
+    metadata:
+      labels:
+        app: authlistener
+    spec:
+      containers:
+        - name: authlistener
+          image: authlistener
+          imagePullPolicy: Never
+          env:
+                  
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: db_host
+                  
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_database
+            
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_user
+            
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_password
+                  
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: authlistener-config
+                  key: rabbit_host
+           
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config
+                  key: minio_root_user
+                  
+            - name: MINIO_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+            
+            - name: MINIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_url
+            
+            - name: MINIO_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_bucket
+            
+            - name: NEO4J_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: authlistener-config
+                  key: neo4j_uri
+            
+            - name: NEO4J_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: authlistener-config
+                  key: neo4j_username
+            
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authlistener-secret
+                  key: neo4j_auth
+            
+            - name: JAEGER_URL
+              value: "http://jaeger-collector:14268/api/traces"
+            - name: APP_NAME
+              value: "authlistener"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authlistener-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: authlistener
+  ports:
+    - port: 8080
+      targetPort: 8080
+
