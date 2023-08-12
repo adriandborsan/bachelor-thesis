@@ -1,8 +1,9 @@
-package com.adriandborsan.adminback.websockets;
+package com.adriandborsan.adminback.log.websockets;
 
-import com.adriandborsan.adminback.documents.LogEntry;
+import com.adriandborsan.adminback.log.documents.LogEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -12,14 +13,10 @@ import reactor.core.publisher.Sinks;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class LogEntryHandler extends TextWebSocketHandler {
     private final Sinks.Many<LogEntry> logEntrySink;
     private final ObjectMapper objectMapper;
-
-    public LogEntryHandler(Sinks.Many<LogEntry> logEntrySink, ObjectMapper objectMapper) {
-        this.logEntrySink = logEntrySink;
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -34,7 +31,7 @@ public class LogEntryHandler extends TextWebSocketHandler {
         try {
             session.sendMessage(new TextMessage(logEntry));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to send message", e);
         }
     }
 
@@ -50,7 +47,7 @@ public class LogEntryHandler extends TextWebSocketHandler {
         try {
             session.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to close session", e);
         }
     }
 }

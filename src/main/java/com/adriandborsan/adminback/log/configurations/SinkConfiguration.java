@@ -1,6 +1,6 @@
-package com.adriandborsan.adminback.configurations;
+package com.adriandborsan.adminback.log.configurations;
 
-import com.adriandborsan.adminback.documents.LogEntry;
+import com.adriandborsan.adminback.log.documents.LogEntry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Sinks;

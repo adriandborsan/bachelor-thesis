@@ -1,4 +1,4 @@
-package com.adriandborsan.adminback.documents;
+package com.adriandborsan.adminback.log.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

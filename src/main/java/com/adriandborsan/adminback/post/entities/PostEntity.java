@@ -16,9 +16,7 @@ public class PostEntity {
     private String message;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileEntity> files;
-
     @ManyToOne
     private UserEntity userEntity;
     private LocalDateTime createdAt;
-
 }

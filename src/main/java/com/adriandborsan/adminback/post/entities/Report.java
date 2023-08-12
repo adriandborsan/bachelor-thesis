@@ -16,16 +16,12 @@ public class Report {
     @Id
     @GeneratedValue
     private Long id;
-
     private String adminId;
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
-
     private Long postId;
-
     @CreatedDate
     private LocalDateTime createdDate;
-
     public enum ReportStatus {
         PENDING, UNDER_REVIEW, RESOLVED
     }

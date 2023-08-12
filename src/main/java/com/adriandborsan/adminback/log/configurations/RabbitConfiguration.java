@@ -1,6 +1,6 @@
-package com.adriandborsan.adminback.configurations;
+package com.adriandborsan.adminback.log.configurations;
 
-import com.adriandborsan.adminback.documents.LogEntry;
+import com.adriandborsan.adminback.log.documents.LogEntry;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

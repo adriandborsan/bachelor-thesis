@@ -11,17 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-//PostAttachment sounds a better name but i am not sure so yeah hihi haha, abracadabra
 public class FileEntity {
-
     @Id
     @GeneratedValue
     private Long id;
-
     private String path;
-
     private String mimeType;
-
     private String originalName;
-
 }

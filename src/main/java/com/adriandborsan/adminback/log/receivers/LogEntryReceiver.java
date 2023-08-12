@@ -1,26 +1,22 @@
-package com.adriandborsan.adminback.receivers;
+package com.adriandborsan.adminback.log.receivers;
 
-import com.adriandborsan.adminback.documents.LogEntry;
-import com.adriandborsan.adminback.services.LogEntryService;
+import com.adriandborsan.adminback.log.documents.LogEntry;
+import com.adriandborsan.adminback.log.services.LogEntryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import java.util.logging.Logger;
 
 @RabbitListener(queues = "${spring.rabbitmq.queue}")
 @Component
+@RequiredArgsConstructor
 public class LogEntryReceiver {
     private final LogEntryService logEntryService;
 
-    public LogEntryReceiver(LogEntryService logEntryService) {
-        this.logEntryService = logEntryService;
-    }
-
     @RabbitHandler
     public void receive(@Payload LogEntry logEntry) {
-        Logger.getAnonymousLogger().info("received new log:\t"+logEntry);
         logEntryService.save(logEntry);
     }
 }

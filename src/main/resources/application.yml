@@ -1,16 +1,3 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-opentracing:
-  jaeger:
-    http-sender:
-      url:  ${JAEGER_URL}
 spring:
   application:
     name: ${APP_NAME}

@@ -15,13 +15,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
 public class ReportService {
     private final PostRepository postRepository;
-
     private final MinioService minioService;
     private final ReportRepository reportRepository;
 
@@ -45,19 +43,13 @@ public class ReportService {
         Optional<Report> optionalReport = Optional.empty();
         String adminId = getCurrentUserId();
         int count = 0;
-        Logger logger = Logger.getAnonymousLogger();
-        logger.info("Starting to process reports");
 
         while (!optionalReport.isPresent()) {
-//            if (count>10)
-//                break;
-            logger.info("Processing report number: " + (++count));
 
             // Look for a report under review by this admin
             optionalReport = reportRepository.findFirstByAdminIdAndStatus(adminId, Report.ReportStatus.UNDER_REVIEW);
 
             if (optionalReport.isPresent()) {
-                logger.info("Found a report under review by this admin: " + optionalReport.get().toString());
             } else {
                 // If no report under review by this admin, find the oldest pending report
                 optionalReport = reportRepository.findFirstByStatusOrderByCreatedDateAsc(Report.ReportStatus.PENDING);
@@ -65,7 +57,6 @@ public class ReportService {
 
             // If there are no pending or under review reports, return an empty optional
             if (!optionalReport.isPresent()) {
-                logger.info("No more reports to process");
                 return Optional.empty();
             }
 
@@ -76,18 +67,15 @@ public class ReportService {
 
             // If the related post does not exist, set this report as RESOLVED, and search again
             if (!byId.isPresent()) {
-                logger.info("Related post does not exist, marking the report as resolved: " + report.toString());
                 report.setStatus(Report.ReportStatus.RESOLVED);
                 reportRepository.save(report);
                 optionalReport = Optional.empty();
                 continue;
             } else {
-                logger.info("Related post found: " + byId.get().toString());
             }
 
             // If a post exists and the report was not under review by this admin, set the report status to UNDER_REVIEW
             if (report.getStatus() != Report.ReportStatus.UNDER_REVIEW) {
-                logger.info("Setting report status to UNDER_REVIEW and assigning it to this admin");
                 report.setStatus(Report.ReportStatus.UNDER_REVIEW);
                 report.setAdminId(adminId); // Set the adminId for this report
                 reportRepository.save(report);
@@ -95,7 +83,6 @@ public class ReportService {
         }
 
         Report report = optionalReport.get();
-        logger.info("Returning the report with ID: " + report.getId());
 
         // Populate the reportDto with the information from the report
         ReportDto reportDto = new ReportDto();
@@ -106,13 +93,8 @@ public class ReportService {
         Optional<PostEntity> byId = postRepository.findById(report.getPostId());
         if(byId.isPresent()) {
             reportDto.setPost(byId.get());
-            logger.info("Adding related post to the reportDto: " + byId.get().toString());
         }
 
         return Optional.of(reportDto);
     }
-
-
-
-
 }

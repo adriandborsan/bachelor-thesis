@@ -13,12 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(force = true)
 public class ReportDto {
     private Long id;
-
     private Report.ReportStatus status;
-
     private PostEntity post;
-
     private LocalDateTime createdDate;
-
-
 }

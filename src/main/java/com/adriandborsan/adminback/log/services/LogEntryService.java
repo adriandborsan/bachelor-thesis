@@ -1,7 +1,8 @@
-package com.adriandborsan.adminback.services;
+package com.adriandborsan.adminback.log.services;
 
-import com.adriandborsan.adminback.documents.LogEntry;
-import com.adriandborsan.adminback.repositories.LogEntryRepository;
+import com.adriandborsan.adminback.log.documents.LogEntry;
+import com.adriandborsan.adminback.log.repositories.LogEntryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,15 +10,10 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Sinks;
 
 @Service
+@RequiredArgsConstructor
 public class LogEntryService {
     private final LogEntryRepository logEntryRepository;
     private final Sinks.Many<LogEntry> logEntrySink;
-
-    public LogEntryService(LogEntryRepository logEntryRepository, Sinks.Many<LogEntry> logEntrySink) {
-        this.logEntryRepository = logEntryRepository;
-        this.logEntrySink = logEntrySink;
-    }
-
 
     public void save(LogEntry entity) {
         logEntrySink.tryEmitNext(logEntryRepository.save(entity));

@@ -1,20 +1,18 @@
-package com.adriandborsan.adminback.controllers;
+package com.adriandborsan.adminback.log.controllers;
 
-import com.adriandborsan.adminback.documents.LogEntry;
-import com.adriandborsan.adminback.services.LogEntryService;
+import com.adriandborsan.adminback.log.documents.LogEntry;
+import com.adriandborsan.adminback.log.services.LogEntryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/rest/logs")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class LogEntryController {
 
     private final LogEntryService logEntryService;
-
-    public LogEntryController(LogEntryService logEntryService) {
-        this.logEntryService = logEntryService;
-    }
 
     @GetMapping("/{id}")
     public LogEntry findById(@PathVariable String id) {
