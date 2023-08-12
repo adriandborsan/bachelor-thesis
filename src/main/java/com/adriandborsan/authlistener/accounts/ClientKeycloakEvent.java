@@ -1,4 +1,4 @@
-package com.adriandborsan.authlistener;
+package com.adriandborsan.authlistener.accounts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

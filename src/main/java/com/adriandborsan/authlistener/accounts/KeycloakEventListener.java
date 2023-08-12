@@ -1,9 +1,9 @@
-package com.adriandborsan.authlistener;
+package com.adriandborsan.authlistener.accounts;
 
-import com.adriandborsan.authlistener.neo4j.UserNode;
-import com.adriandborsan.authlistener.neo4j.UserNodeRepository;
-import com.adriandborsan.authlistener.user.UserEntity;
-import com.adriandborsan.authlistener.user.UserService;
+import com.adriandborsan.authlistener.accounts.neo4j.UserNode;
+import com.adriandborsan.authlistener.accounts.neo4j.UserNodeRepository;
+import com.adriandborsan.authlistener.accounts.user.UserEntity;
+import com.adriandborsan.authlistener.accounts.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;

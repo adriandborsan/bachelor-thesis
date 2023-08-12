@@ -1,4 +1,4 @@
-package com.adriandborsan.authlistener.neo4j;
+package com.adriandborsan.authlistener.accounts.neo4j;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 

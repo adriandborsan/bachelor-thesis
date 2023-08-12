@@ -1,7 +1,7 @@
-package com.adriandborsan.authlistener.user;
+package com.adriandborsan.authlistener.accounts.user;
 
-import com.adriandborsan.authlistener.neo4j.UserNode;
-import com.adriandborsan.authlistener.neo4j.UserNodeRepository;
+import com.adriandborsan.authlistener.accounts.neo4j.UserNode;
+import com.adriandborsan.authlistener.accounts.neo4j.UserNodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

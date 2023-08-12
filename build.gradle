@@ -26,9 +26,6 @@ dependencies {
  	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
 }
 
 jar {

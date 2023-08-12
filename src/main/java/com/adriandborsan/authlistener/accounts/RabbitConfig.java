@@ -1,4 +1,4 @@
-package com.adriandborsan.authlistener;
+package com.adriandborsan.authlistener.accounts;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

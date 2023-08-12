@@ -1,4 +1,4 @@
-package com.adriandborsan.authlistener.user;
+package com.adriandborsan.authlistener.accounts.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
