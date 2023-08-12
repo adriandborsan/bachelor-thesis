@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adminback-config
+data:
+  db_host: mongo-service
+  issuer_url: http://keycloak-service:8080/realms/adminapp
