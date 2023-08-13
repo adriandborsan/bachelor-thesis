@@ -13,8 +13,6 @@ export class LogInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // console.log('Headers: ', request.headers.keys().map(key => `${key}: ${request.headers.get(key)}`));
-    // console.log(request.headers.get("Authorization"));
         return next.handle(request);
   }
 }

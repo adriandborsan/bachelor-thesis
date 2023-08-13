@@ -37,7 +37,6 @@ export class ReportService {
         return report;
       }),
       catchError(error => {
-        // Re-throw the original error
         throw error;
       })
     );
