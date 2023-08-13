@@ -23,7 +23,6 @@ export class LogInterceptor implements HttpInterceptor {
             return throwError(() => error);
         }));
     }
-    // if the request does not match '/api', it passes through without any intervention
     return next.handle(request);
 }
 

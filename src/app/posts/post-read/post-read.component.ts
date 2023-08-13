@@ -40,7 +40,6 @@ export class PostReadComponent implements OnInit {
   initializeObserver(): void {
     setTimeout(() => {
       if (this.sentinel.first) {
-        // //console.log(this.sentinel.first.element.nativeElement); // debugging
 
         this.observer = new IntersectionObserver((entries) => {
           if (entries[0].isIntersecting && !this.loading&& !this.noMorePosts) {
@@ -79,7 +78,6 @@ export class PostReadComponent implements OnInit {
         this.loading = false;
         this.noMorePosts = true;
         if (this.observer) {
-          // this.observer.disconnect(); // stop observing when there are no more posts
         }
       } else {
         this.posts = [...this.posts, ...postResponse.content];

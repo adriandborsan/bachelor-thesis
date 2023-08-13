@@ -20,7 +20,6 @@ editProfile() {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    //console.log(`Dialog result: ${result}`);
   });
 }
   userId: string;
@@ -36,11 +35,9 @@ editProfile() {
      })
     ).subscribe(user=>{
      this.userEntity=user;
-    //  console.log(this.userEntity.profilePicture);
 
      if (this.userEntity.profilePicture && this.userEntity.profilePicture !== 'null') {
        this.userEntity.profilePicture = `${environment.minioUrl}/${environment.profileBucket}${ this.userEntity.profilePicture}`;
-      //  console.log(this.userEntity.profilePicture);
 
        this.pic = this.userEntity.profilePicture;
      }

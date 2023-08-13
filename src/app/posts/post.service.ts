@@ -18,10 +18,8 @@ export class PostService {
   postsModifiedEventEmitter = new EventEmitter();
 
   getPosts(page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'desc'}]) {
-    // Build the sort parameter
     let sortParam = sorts.map(sort => `${sort.property},${sort.direction}`).join('&sort=');
 
-    // Build the full URL with all parameters
     let fullUrl = `${this.baseUri}?page=${page}&size=${size}&sort=${sortParam}`;
 
     return this.http.get<PostResponse>(fullUrl).pipe(
@@ -42,21 +40,16 @@ export class PostService {
 
 
   getPostsByUser(userId:string,page: number = 0, size: number = 2, sorts: {property: string, direction: string}[] = [{property: 'id', direction: 'desc'}]) {
-    // Build the sort parameter
     let sortParam = sorts.map(sort => `${sort.property},${sort.direction}`).join('&sort=');
 
-    // Build the full URL with all parameters
     let fullUrl = `${this.baseProfileUri}/${userId}/posts?page=${page}&size=${size}&sort=${sortParam}`;
-//console.log(fullUrl);
 
     return this.http.get<PostResponse>(fullUrl).pipe(
       map((response: PostResponse) => {
-        //console.log(PostResponse);
         response.content.forEach((post: Post) => {
           if (post.userEntity.profilePicture && post.userEntity.profilePicture !== 'null') {
             post.userEntity.profilePicture=environment.minioUrl +"/"+environment.profileBucket+ post.userEntity.profilePicture;
           }
-          //console.log(  post.userEntity.profilePicture);
 
           post.files.forEach((file: PostFile) => {
             file.fullPath = environment.minioUrl +"/"+environment.bucket+ file.path;
@@ -104,7 +97,6 @@ export class PostService {
     return this.http
       .get<any>(`${this.baseUri}/${id}`)
       .pipe(
-        // ap(json => //console.log(JSON.stringify(json))),
       catchError((error) => this.handleError(error)));
   }
 

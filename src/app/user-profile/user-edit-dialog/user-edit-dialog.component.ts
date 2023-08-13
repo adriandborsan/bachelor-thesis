@@ -23,12 +23,7 @@ export class UserEditDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //console.log("asta e data");
-    //console.log(this.data);
-
-
     this.initializeForm(this.data);
-    // this.fetchUser();
   }
 
   initializeForm(user: Partial<UserEntity> = {}) {
@@ -43,8 +38,6 @@ export class UserEditDialogComponent implements OnInit {
     if (user.profilePicture) {
       this.profilePicturePreview = user.profilePicture;
     }
-    //console.log(user.profilePicture);
-
   }
 
   fetchUser(): void {
@@ -74,7 +67,6 @@ export class UserEditDialogComponent implements OnInit {
   async onSubmit() {
     try {
       const response = await lastValueFrom(this.userService.updateUser(this.data.id, this.editUserForm.value as Partial<UserEntity>));
-      //console.log(response);
       this.dialogRef.close();
     } catch (error) {
       console.error(error);

@@ -2,14 +2,10 @@ mat-card {
   margin: 1em;
 }
 
-/* app-post-skeleton.component.css */
 mat-card {
-  /* Use flexbox for centering content */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* Use min-height to ensure the card takes up some space even when empty */
-  min-height: 200px; /* Adjust this value according to your needs */
+  min-height: 200px;
 }

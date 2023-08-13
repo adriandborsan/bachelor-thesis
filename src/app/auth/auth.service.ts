@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { UserProfile } from './login/account.model';
@@ -53,7 +52,6 @@ export class AuthService {
       if (file) {
         profilePictureUrl = `${environment.minioUrl}/${environment.profileBucket}${file}`;
       }
-      //console.log(profilePictureUrl);
 
 
       this.currentUser = {

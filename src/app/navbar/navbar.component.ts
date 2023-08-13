@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { Observable, of, startWith, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -26,7 +26,6 @@ pic: string='/assets/profile.jpeg';
   ngOnInit() {
     this.authService.userProfileLoaded$.subscribe(profileLoaded => {
       if (profileLoaded) {
-        //console.log(this.authService.getCurrentUser().profilePictureUrl);
         this.pic = this.authService.getCurrentUser().profilePictureUrl;
       }
     });

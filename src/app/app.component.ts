@@ -19,29 +19,21 @@ constructor(
   ){}
 
 ngOnInit() {
-  //console.log("wowowowowowowowo");
   this.ccService.statusChange$.subscribe(
     (event: any) => {
-      //console.log("AAAAAAAAAAAAAAAAAAAAAAA\n\n\n\n\n\n\nAAAAAAAAAAAAAAAAAAAAAAAAA");
-
-     //console.log(event);
-
     });
     this.ccService.initialized$.subscribe(
       (event: any) => {
-        //console.log("Initialized: ", event);
-        this.ccService.destroy(); // Destroy previous cookie consent
+        this.ccService.destroy();
         this.ccService.open();
       }
     );
     this.ccService.initializing$.subscribe(
       (event: any) => {
-        //console.log("ing: ", event);
       }
     );
     this.ccService.initializationError$.subscribe(
       (event: any) => {
-        //console.log("ERROR: ", event);
       }
     );
 

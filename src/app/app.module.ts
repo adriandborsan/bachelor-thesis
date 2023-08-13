@@ -51,7 +51,7 @@ import { UserEditDialogComponent } from './user-profile/user-edit-dialog/user-ed
 
 const cookieConfig:NgcCookieConsentConfig = {
   cookie: {
-    domain: 'localhost'// it is recommended to set your domain, for cookies to work properly
+    domain: 'localhost'
   },
   palette: {
     popup: {
@@ -129,8 +129,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
     HttpClientModule,

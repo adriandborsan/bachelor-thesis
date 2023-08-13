@@ -41,7 +41,7 @@ export class UserService {
       .get<any>(`${this.baseUri}/${id}`)
 
       .pipe(
-        tap((hello)=>{//console.log(JSON.stringify(hello));
+        tap((hello)=>{
         }),
         catchError((error) => this.handleError(error)));
   }
