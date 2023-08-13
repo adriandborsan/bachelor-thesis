@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminfront-deployment
+spec:
+  selector:
+    matchLabels:
+      app: adminfront
+  template:
+    metadata:
+      labels:
+        app: adminfront
+    spec:
+      containers:
+      - name: adminfront
+        image: adminfront
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminfront-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: adminfront
+  ports:
+  - port: 80
+    targetPort: 80
