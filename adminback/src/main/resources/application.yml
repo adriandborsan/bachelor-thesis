@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ${APP_NAME}
+  datasource:
+    url: jdbc:mysql://${MYSQL_DB_HOST}/${MYSQL_DB_NAME}
+    username: ${MYSQL_DB_USERNAME}
+    password: ${MYSQL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      database: ${DB_NAME}
+      uri: mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/?authSource=admin
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    queue: ${RABBIT_QUEUE}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URL}
+rabbit_class_name: ${RABBIT_CLASS_NAME}
+minio:
+  url: ${MINIO_URL}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_ACCESS_SECRET}
+  bucket:
+    name: ${MINIO_BUCKET}
