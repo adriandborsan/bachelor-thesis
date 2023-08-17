@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: authlistener
+
+build:
+  artifacts:
+    - image: authlistener
+      context: .
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - ../k8sconfig/authlistener/deployment.yml
