@@ -1,0 +1,13 @@
+.container {
+  max-width: 40em;
+  margin: auto;
+}
+.user-profile-card {
+  max-width: 400px;
+  margin: auto;
+}
+
+.user-profile-card mat-card-header div[mat-card-avatar] {
+  background-size: cover;
+  background-position: center;
+}

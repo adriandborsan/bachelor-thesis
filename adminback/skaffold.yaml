@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: adminback
+
+build:
+  artifacts:
+    - image: adminback
+      context: .
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - ../k8sconfig/adminback/deployment.yml

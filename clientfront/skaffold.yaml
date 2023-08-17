@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: clientfront
+
+build:
+  artifacts:
+    - image: clientfront
+      context: .
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kustomize:
+    paths:
+      - ../k8sconfig/clientfront/

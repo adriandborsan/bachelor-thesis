@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <span>Kiire</span>
+  <span class="spacer"></span>
+  <a routerLink="/">
+    <button mat-icon-button>
+      <mat-icon>home</mat-icon>
+    </button>
+  </a>
+
+  <span class="spacer"></span>
+  <ng-container *ngIf="isLoggedIn$ | async">
+    <ng-container *ngIf="authService.userProfileLoaded$ | async">
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <img mat-list-avatar [src]="pic" alt="" (error)="setDefaultImage()"/>
+      </button>
+    </ng-container>
+  </ng-container>
+
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="navigateToUserProfile()">My Profile</button>
+    <button mat-menu-item (click)="navigateToAccountSettings()">Account Settings</button>
+    <button mat-menu-item (click)="logout()">Log out</button>
+  </mat-menu>
+</mat-toolbar>

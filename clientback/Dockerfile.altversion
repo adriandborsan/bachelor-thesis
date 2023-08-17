@@ -1,0 +1,17 @@
+FROM gradle:7.5.1-jdk17 as builder
+WORKDIR /app
+COPY build.gradle settings.gradle /app/
+RUN gradle clean build --no-daemon || true
+COPY ./ /app/
+RUN --mount=type=cache,target=/root/.gradle gradle build --no-daemon &&\
+    cd build/libs &&\
+    java -Djarmode=layertools -jar ./*.jar extract
+
+FROM eclipse-temurin:17-jre-jammy
+ARG PATH=/app/build/libs
+WORKDIR ${PATH}
+COPY --from=builder ${PATH}/dependencies/ ./
+COPY --from=builder ${PATH}/spring-boot-loader/ ./
+COPY --from=builder ${PATH}/snapshot-dependencies/ ./
+COPY --from=builder ${PATH}/application/ ./
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]

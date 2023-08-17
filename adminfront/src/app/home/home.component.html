@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <span></span>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <div class="report-wrapper">
+    <app-report></app-report>
+  </div>
+
+  <div class="tab-wrapper">
+    <mat-tab-group class="mat-elevation-z8" mat-stretch-tabs="false" mat-align-tabs="center" color="primary" backgroundColor="accent">
+      <mat-tab label="Reactive">
+        <app-reactive-log></app-reactive-log>
+      </mat-tab>
+      <mat-tab label="Rest">
+        <app-log-table></app-log-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <!-- <mat-card-subtitle>user is {{username}}</mat-card-subtitle> -->
+    <mat-card-title>{{ post.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    {{ post.id }} has message
+    <p>{{ post.message }}</p>
+    <div class="posts" *ngFor="let file of post.files">
+      <p>{{file.mimeType}}</p>
+      <p>{{file.originalName}}</p>
+      <ng-container [ngSwitch]="getFileType(file.mimeType)">
+        <div *ngSwitchCase="'image'" class="square">
+          <img [src]="file.fullPath" />
+        </div>
+        <div *ngSwitchCase="'video'" class="square">
+          <video controls >
+            <source [src]="file.fullPath" type="{{file.mimeType}}">
+          </video>
+        </div>
+        <div *ngSwitchCase="'audio'">
+          <audio controls >
+            <source [src]="file.fullPath" type="{{file.mimeType}}">
+          </audio>
+        </div>
+        <div *ngSwitchDefault>
+          <a [href]="file.fullPath" download>Download {{file.originalName}}</a>
+        </div>
+        <p>aolo</p>
+      </ng-container>
+      </div>
+  </mat-card-content>
+</mat-card>

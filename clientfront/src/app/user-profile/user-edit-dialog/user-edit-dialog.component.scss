@@ -1,0 +1,27 @@
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+button[mat-raised-button] {
+  display: block;
+  margin: 0 auto 1rem auto;
+}

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-config
+data:
+  keycloak_admin: kuser
+  kc_db: postgres
+  kc_db_url_host: postgres-service
+  kc_proxy: edge
+  keycloak_event_listener: rabbitmq
+  rabbitmq_host: keycloak-rabbitmq-service
+  rabbitmq_vhost: /
+  rabbitmq_username: guest
+  rabbitmq_password: guest
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+data:
+  keycloak_admin_password: MTIzNA== #1234

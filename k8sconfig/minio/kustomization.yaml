@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yml
+
+configMapGenerator:
+- name: bucket-settings
+  files:
+  - post-bucket.json
+  - profile-bucket.json
+- name: minio-scripts
+  files:
+  - bucket-setup.sh

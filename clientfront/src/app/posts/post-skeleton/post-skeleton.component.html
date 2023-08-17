@@ -1,0 +1,16 @@
+<div></div>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-subtitle>&nbsp;</mat-card-subtitle> <!-- Empty content as placeholder -->
+    <mat-card-title>&nbsp;</mat-card-title> <!-- Empty content as placeholder -->
+  </mat-card-header>
+  <mat-card-content>
+    <p>&nbsp;</p> <!-- Empty content as placeholder -->
+  </mat-card-content>
+  <!-- Hide spinner when there are no more posts -->
+  <mat-progress-spinner mode="indeterminate" *ngIf="!noMorePosts"></mat-progress-spinner>
+  <!-- Show message when there are no more posts -->
+  <p *ngIf="noMorePosts">No more posts</p>
+</mat-card>
+
