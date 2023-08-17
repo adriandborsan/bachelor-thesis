@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="actions">
+    <div class="buttons">
+      <mat-form-field>
+        <mat-label>Maximum elements to store</mat-label>
+        <input matInput placeholder="Length" type="number" [(ngModel)]="length" (change)="lengthChange()"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Page Size</mat-label>
+        <input matInput placeholder="Page Size" type="number" [(ngModel)]="pageSize" (change)="pageChange()" />
+      </mat-form-field>
+    </div>
+
+    <mat-paginator #paginator [length]="dataSource.data.length" [pageSize]="pageSize" showFirstLastButtons [pageSizeOptions]="[10, 20, 50, 100, 200]">
+    </mat-paginator>
+  </div>
+
+  <table mat-table #sorter="matSort" [dataSource]="dataSource" matSort matSortActive="receivedAt" matSortDirection="desc">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>id</th>
+      <td mat-cell *matCellDef="let logEntry">
+        {{ logEntry.id }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef>message</th>
+      <td mat-cell *matCellDef="let logEntry">
+        {{ logEntry.message }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>createdAt</th>
+      <td mat-cell *matCellDef="let logEntry">
+        {{ logEntry.createdAt | date : "yyyy-MM-dd HH:mm ss:SSS " }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="receivedAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>receivedAt</th>
+      <td mat-cell *matCellDef="let logEntry">
+        {{ logEntry.receivedAt | date : "yyyy-MM-dd HH:mm ss:SSS " }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
