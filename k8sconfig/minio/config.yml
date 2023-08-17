@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-config
+data:
+  minio_root_user: miniouser
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-secret
+data:
+  minio_root_password: MTIzNDU2Nzg= #12345678

@@ -1,0 +1,9 @@
+neo4j:
+  name: neo4j-deployment
+  password: "hahahehe"
+volumes:
+  data:
+    mode: defaultStorageClass
+    defaultStorageClass:
+      requests:
+        storage: 1G
