@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: keycloak-custom
+          args: 
+            - "-Dkeycloak.import=/import"
+          env:
+
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: keycloak_admin
+
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: keycloak_admin_password
+
+            - name: KC_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: kc_proxy
+
+            - name: KC_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: kc_db
+
+            - name: KC_DB_URL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: kc_db_url_host
+
+            - name: KC_DB_URL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: postgres_db
+
+            - name: KC_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: postgres_user
+
+            - name: KC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres_password
+            
+            - name: KEYCLOAK_EVENT_LISTENERS
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: keycloak_event_listener
+
+            - name: KK_TO_RMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: rabbitmq_host
+
+            - name: KK_TO_RMQ_VHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: rabbitmq_vhost
+            
+            - name: KK_TO_RMQ_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: rabbitmq_username
+            
+            - name: KK_TO_RMQ_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: keycloak-config
+                  key: rabbitmq_password
+
+          volumeMounts:
+          - name: keycloak-volume
+            mountPath: /import
+      volumes:
+      - name: keycloak-volume
+        configMap:
+          name: keycloak-realm-conf
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: keycloak
+  ports:
+    - protocol : TCP
+      port: 8080
+      targetPort: 8080
