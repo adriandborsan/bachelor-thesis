@@ -1,0 +1,35 @@
+mat-card {
+  margin: 1em;
+}
+
+
+
+button {
+  margin-left: auto;
+}
+
+video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.square{
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+
+.header-image {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+}
+
+.clickable {
+  cursor: pointer;
+}

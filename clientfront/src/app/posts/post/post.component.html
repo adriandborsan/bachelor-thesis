@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+      <img mat-card-avatar [src]="pic" alt="" (error)="setDefaultImage()" class="header-image clickable" (click)="navigateToProfile(post.userEntity.id)">
+      <mat-card-subtitle class="clickable" (click)="navigateToProfile(post.userEntity.id)">user is {{post.userEntity.displayUsername}}</mat-card-subtitle>
+
+    <mat-card-title> title post:{{ post.title }}</mat-card-title>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngIf="authService.userProfileLoaded$| async ">
+        <button *ngIf="post.userEntity.id == authService.getCurrentUser().id" mat-menu-item (click)="edit()">
+          <mat-icon> border_color</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="post.userEntity.id == authService.getCurrentUser().id" mat-menu-item (click)="delete()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+        </ng-container>
+
+      <button mat-menu-item (click)="report()">
+        <mat-icon>report</mat-icon>
+        <span>Report</span>
+      </button>
+    </mat-menu>
+  </mat-card-header>
+  <mat-card-content>
+    {{ post.id }} has message
+    <p>{{ post.message }}</p>
+    <owl-carousel-o [options]="customOptions">
+      <ng-template class="posts" *ngFor="let file of post.files" carouselSlide>
+        <ng-container [ngSwitch]="getFileType(file.mimeType)">
+          <div *ngSwitchCase="'image'" class="square">
+            <img [src]="file.fullPath"  loading="lazy"/>
+          </div>
+          <div *ngSwitchCase="'video'" class="square">
+            <video controls preload="metadata">
+              <source [src]="file.fullPath" type="{{file.mimeType}}">
+            </video>
+          </div>
+          <div *ngSwitchCase="'audio'">
+            <audio controls preload="metadata">
+              <source [src]="file.fullPath" type="{{file.mimeType}}">
+            </audio>
+          </div>
+          <div *ngSwitchDefault>
+            <a [href]="file.fullPath" download>Download {{file.originalName}}</a>
+          </div>
+        </ng-container>
+      </ng-template>
+    </owl-carousel-o>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,15 @@
+mat-dialog-content {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  min-width: 40em;
+}
+
+textarea {
+  min-height: 5em;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
