@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientback-deployment
+spec:
+  selector:
+    matchLabels:
+      app: clientback
+  template:
+    metadata:
+      labels:
+        app: clientback
+    spec:
+      containers:
+        - name: clientback
+          image: clientback
+          imagePullPolicy: Never
+          env:
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: db_host
+                  
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_database
+            
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql_user
+            
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_password
+          
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_host
+
+            - name: RABBIT_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_queue
+
+            - name: RABBIT_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: rabbit_class
+            
+            - name: ISSUER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: issuer_url
+            
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config
+                  key: minio_root_user
+                  
+            - name: MINIO_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_root_password
+            
+            - name: MINIO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_url
+            
+            - name: MINIO_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: clientback-config
+                  key: minio_bucket
+            
+            - name: NEO4J_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: authlistener-config
+                  key: neo4j_uri
+            
+            - name: NEO4J_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: authlistener-config
+                  key: neo4j_username
+            
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authlistener-secret
+                  key: neo4j_auth
+            
+            - name: JAEGER_URL
+              value: "http://jaeger-collector:14268/api/traces"
+            - name: APP_NAME
+              value: "clientback"
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clientback-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: clientback
+  ports:
+    - port: 8080
+      targetPort: 8080
+
