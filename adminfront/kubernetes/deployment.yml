@@ -28,7 +28,6 @@ kind: Service
 metadata:
   name: adminfront-service
 spec:
-  type: LoadBalancer
   selector:
     app: adminfront
   ports:
