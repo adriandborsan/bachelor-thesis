@@ -10,6 +10,6 @@ build:
       docker:
         dockerfile: Dockerfile
 deploy:
-  kubectl:
-    manifests:
-      - ../k8sconfig/adminback/deployment.yml
+  kustomize:
+    paths:
+    - ./kubernetes/
