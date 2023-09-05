@@ -12,4 +12,4 @@ build:
 deploy:
   kustomize:
     paths:
-      - ../k8sconfig/adminfront/
+      - ./kubernetes
