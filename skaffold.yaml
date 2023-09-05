@@ -1,0 +1,9 @@
+apiVersion: skaffold/v2beta21
+kind: Config
+requires:
+  - path: ./keycloakify/skaffold.yaml
+  - path: ./authlistener/skaffold.yaml
+  - path: ./clientback/skaffold.yaml
+  - path: ./adminback/skaffold.yaml
+  - path: ./adminfront/skaffold.yaml
+  - path: ./clientfront/skaffold.yaml
