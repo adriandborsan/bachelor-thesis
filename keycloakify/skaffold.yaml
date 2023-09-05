@@ -11,4 +11,4 @@ build:
 deploy:
   kustomize:
     paths:
-      - ../k8sconfig/keycloak/
+      - ./kubernetes
