@@ -4,7 +4,8 @@ kind: Config
 deploy:
   helm:
     releases:
-      - name: my-standalone
+      - name: neo4j
         chartPath: neo4j/neo4j
         valuesFiles:
           - neo4j.values.yaml
+        skipBuildDependencies: true
