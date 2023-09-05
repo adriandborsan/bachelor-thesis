@@ -1,0 +1,9 @@
+apiVersion: skaffold/v2beta21
+kind: Config
+requires:
+  - path: ./keycloak-rabbitmq/skaffold.yaml
+  - path: ./mongo/skaffold.yaml
+  - path: ./mysql/skaffold.yaml
+  - path: ./postgres/skaffold.yaml
+  - path: ./rabbitmq/skaffold.yaml
+  - path: ./minio/skaffold.yaml

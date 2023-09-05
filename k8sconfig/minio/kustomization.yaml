@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+- volume.yml
+- config.yml
 - deployment.yml
 
 configMapGenerator:

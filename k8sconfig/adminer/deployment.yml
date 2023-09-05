@@ -22,7 +22,6 @@ metadata:
 spec:
   selector:
     app: adminer
-  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8080
