@@ -2,7 +2,6 @@ apiVersion: skaffold/v2beta26
 kind: Config
 metadata:
   name: clientback
-
 build:
   artifacts:
     - image: clientback
@@ -10,6 +9,6 @@ build:
       docker:
         dockerfile: Dockerfile
 deploy:
-  kubectl:
-    manifests:
-      - ../k8sconfig/clientback/deployment.yml
+  kustomize:
+    paths:
+    - ./kubernetes/
