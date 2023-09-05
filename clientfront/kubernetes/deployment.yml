@@ -28,7 +28,6 @@ kind: Service
 metadata:
   name: clientfront-service
 spec:
-  type: LoadBalancer
   selector:
     app: clientfront
   ports:
