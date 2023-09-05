@@ -18,10 +18,7 @@ spec:
           env:
                   
             - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: clientback-config
-                  key: db_host
+              value: mysql-service
                   
             - name: DB_NAME
               valueFrom:
@@ -60,16 +57,10 @@ spec:
                   key: minio_root_password
             
             - name: MINIO_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: clientback-config
-                  key: minio_url
+              value: http://minio-service
             
             - name: MINIO_BUCKET
-              valueFrom:
-                configMapKeyRef:
-                  name: clientback-config
-                  key: minio_bucket
+              value: post-bucket
             
             - name: NEO4J_URI
               valueFrom:
@@ -99,7 +90,6 @@ kind: Service
 metadata:
   name: authlistener-service
 spec:
-  type: LoadBalancer
   selector:
     app: authlistener
   ports:
