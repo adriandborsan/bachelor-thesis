@@ -122,7 +122,6 @@ kind: Service
 metadata:
   name: adminback-service
 spec:
-  type: LoadBalancer
   selector:
     app: adminback
   ports:
