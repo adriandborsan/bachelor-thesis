@@ -58,7 +58,6 @@ kind: Service
 metadata:
   name: mongo-service
 spec:
-  type: LoadBalancer
   selector:
     app: mongo
   ports:

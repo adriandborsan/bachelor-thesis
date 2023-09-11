@@ -39,7 +39,6 @@ kind: Service
 metadata:
   name: phpmyadmin-service
 spec:
-  type: LoadBalancer
   selector:
     app: phpmyadmin
   ports:

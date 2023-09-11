@@ -118,7 +118,6 @@ kind: Service
 metadata:
   name: clientback-service
 spec:
-  type: LoadBalancer
   selector:
     app: clientback
   ports:
