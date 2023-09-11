@@ -1,34 +1,31 @@
 
-# Web Application Based on Microservices using the Spring Boot Framework
+# Web Application Based on Microservices using the [Spring Boot Framework](https://spring.io/projects/spring-boot)
 
 ## Social Media Web App
 
 ![Logo](./resources/logo.png)
 
-> Kiire is a comprehensive web application designed around the concept of microservices, offering dual modules: a user-centric social networking platform and an admin-focused monitoring system. Developed using state-of-the-art technologies like Spring Boot, Angular, and TypeScript, the application is hosted on a Kubernetes cluster, providing advantages like seamless scalability and efficient resource management. Users can engage in typical social networking activities such as creating, editing, and reporting posts, while administrators have tools to monitor content and view real-time logs. The system leverages multiple databases like MySQL, PostgreSQL, and Neo4j for versatile data storage, and incorporates RabbitMQ for smooth inter-service communication. Keycloak ensures secure identity management, enhanced by custom plugins.
+> Kiire is a comprehensive web application designed around the concept of microservices, offering dual modules: a user-centric social networking platform and an admin-focused monitoring system. Developed using state-of-the-art technologies like [Spring Boot](https://spring.io/projects/spring-boot), [Angular](https://angular.io/), and [TypeScript](https://www.typescriptlang.org/), the application is hosted on a [Kubernetes](https://kubernetes.io/) cluster, providing advantages like seamless scalability and efficient resource management. Users can engage in typical social networking activities such as creating, editing, and reporting posts, while administrators have tools to monitor content and view real-time logs. The system leverages multiple databases like [MySQL](https://dev.mysql.com/doc/), [PostgreSQL](https://www.postgresql.org/docs/), and [Neo4j](https://neo4j.com/developer/kb/) for versatile data storage, and incorporates [RabbitMQ](https://www.rabbitmq.com/documentation.html) for smooth inter-service communication. [Keycloak](https://www.keycloak.org/documentation.html) ensures secure identity management, enhanced by custom plugins.
 
 ## Table of Contents
 
-- [Web Application Based on Microservices using the Spring Boot Framework]
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-    - [Client](#client)
-    - [Admin](#admin)
-  - [Architecture](#architecture)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Cloning](#cloning)
-  - [Kubernetes Deployment Guide](#kubernetes-deployment-guide)
-    - [Ingress-Nginx](#ingress-nginx)
-    - [Kubernetes Dashboard](#kubernetes-dashboard)
-    - [Neo4j](#neo4j)
-    - [Important Microservices](#important-microservices)
-    - [Principal Microservices](#principal-microservices)
-    - [Ingress](#ingress)
-  - [Troubleshooting](#troubleshooting)
-  - [Branches and Configurations](#branches-and-configurations)
-  - [Documentation](#documentation)
-  - [License](#license)
+- [Features](#features)
+  - [Client](#client)
+  - [Admin](#admin)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Cloning](#cloning)
+- [Kubernetes Deployment Guide](#kubernetes-deployment-guide)
+  - [Ingress-Nginx](#ingress-nginx)
+  - [Kubernetes Dashboard](#kubernetes-dashboard)
+  - [Neo4j](#neo4j)
+  - [Important Microservices](#important-microservices)
+  - [Principal Microservices](#principal-microservices)
+  - [Ingress](#ingress)
+- [Troubleshooting](#troubleshooting)
+- [Documentation](#documentation)
+- [License](#license)
 
 ---
 
@@ -36,58 +33,96 @@
 
 ### Client
 
-#### Client Features and Technologies
+#### Features and Technologies for Client Module
 
-- *Keycloak login flow*  
-![Client Screenshot 01](./resources/client/client01.png)
-![Client Screenshot 02](./resources/client/client02.png)
-![Client Screenshot 03](./resources/client/client03.png)
-![Client Screenshot 04](./resources/client/client04.png)
+##### Keycloak Login Flow
 
-- *Home page and menu*  
-![Client Screenshot 06](./resources/client/client06.png)
+![Keycloak Login Flow](./resources/client/client01.png)
+![Keycloak Login Flow](./resources/client/client02.png)
+![Keycloak Login Flow](./resources/client/client03.png)
+![Keycloak Login Flow](./resources/client/client04.png)
 
-- *Edit Profile Dialog*  
-![Client Screenshot 09](./resources/client/client09.png)
+##### Home Page and Menu
 
-- *Profile Updated And New Post Form*  
-![Client Screenshot 10](./resources/client/client10.png)
+![Home Page and Menu](./resources/client/client06.png)
 
-- *New Post Created*  
-![Client Screenshot 11](./resources/client/client11.png)
+##### Edit Profile Dialog
 
-- *Post Menu. Own posts can also be edited or deleted*  
-![Client Screenshot 12](./resources/client/client12.png)
+![Edit Profile Dialog](./resources/client/client09.png)
 
-- *Edit Post Dialog*  
-![Client Screenshot 13](./resources/client/client13.png)
+##### Profile Updated and New Post Form
 
-- *User Settings Where The Password Can Be Changed*  
-![Client Screenshot 14](./resources/client/client14.png)
+![Profile Updated and New Post Form](./resources/client/client10.png)
+
+##### New Post Created
+
+![New Post Created](./resources/client/client11.png)
+
+##### Post Menu
+
+*Note: You can edit or delete your own posts.*  
+![Post Menu](./resources/client/client12.png)
+
+##### Edit Post Dialog
+
+![Edit Post Dialog](./resources/client/client13.png)
+
+##### User Settings
+
+*Note: Here you can change your password.*  
+![User Settings](./resources/client/client14.png)
+
+---
 
 ### Admin
 
-#### Admin Features and Technologies
+#### Features and Technologies for Admin Module
 
-- *Keycloak login Flow*  
-![Admin Screenshot 01](./resources/admin/admin01.png)
-![Admin Screenshot 02](./resources/admin/admin02.png)
+##### Keycloak Login Flow Admin
 
-- *Admin Home Page Hwere Reports are treated and if a post is considered to violate rules, then it gets deleted*  
-![Admin Screenshot 03](./resources/admin/admin03.png)
+![Keycloak Login Flow](./resources/admin/admin01.png)
+![Keycloak Login Flow](./resources/admin/admin02.png)
 
-- *also in the home page the admin can see Real Time Display of Events Happening in Client App*  
-![Admin Screenshot 04](./resources/admin/admin04.png)
+##### Admin Home Page
 
-- *Seeing The Data Through the Rest Api*  
-![Admin Screenshot 05](./resources/admin/admin05.png)
+*Note: Here, reports are processed. Posts that violate rules are deleted.*  
+![Admin Home Page](./resources/admin/admin03.png)
 
+##### Real-Time Display of Client Events
+
+*Note: Visible on the home page.*  
+![Real-Time Display of Client Events](./resources/admin/admin04.png)
+
+##### Data View via REST API
+
+![Data View via REST API](./resources/admin/admin05.png)
 
 ---
 
 ## Architecture
 
 ![Overview of the microservices architecture](resources/architecture.png)
+
+This architecture constitutes a two-tier application: a client-side and an admin-side, each having a corresponding Angular frontend and Spring Boot backend—denoted as `[client|admin]front` and `[client|admin]back`, respectively. Both frontends are secured using Keycloak, which communicates with a PostgreSQL database and a RabbitMQ instance.
+
+For data storage, three databases are utilized: MySQL for structured data, Neo4j for relationships between entities, and Minio for file storage. The architecture incorporates several other utility services like Adminer, Kubernetes Dashboard, Ingress, and more. These additional services are configured in the `k8sconfig` directory.
+
+### Projects with Independent Repositories
+
+- [adminback](https://github.com/adriandborsan/bachelor-thesis/tree/adminback): Spring Boot backend for the admin interface
+- [adminfront](https://github.com/adriandborsan/bachelor-thesis/tree/adminfront): Angular frontend for the admin interface
+- [authlistener](https://github.com/adriandborsan/bachelor-thesis/tree/authlistener): Spring Boot service for listening to Keycloak events and synchronizing databases
+- [clientback](https://github.com/adriandborsan/bachelor-thesis/tree/clientback): Spring Boot backend for the client interface
+- [clientfront](https://github.com/adriandborsan/bachelor-thesis/tree/clientfront): Angular frontend for the client interface
+- [keycloakify](https://github.com/adriandborsan/bachelor-thesis/tree/keycloakify): React-based customization of the Keycloak interface
+
+### Kubernetes-Only Configurations
+
+- [k8sconfig](https://github.com/adriandborsan/bachelor-thesis/tree/k8sconfig): Houses Kubernetes configurations for services that don't require a dedicated repository.
+
+### Development Approach
+
+Each project lives in an independent orphan branch, allowing for isolated development while retaining the benefits of a single repository. This setup facilitates easy migration to separate repositories in the future. When code is ready for merging into the `dev` or `main` branches, it's moved to a subfolder named after the corresponding microservice.
 
 ---
 
@@ -104,8 +139,9 @@
 
 ### Cloning
 
+This command allows cloning of the entire repository projects to facilitate easier working on different projects at the same time. It should be run in a bash terminal:
+
 ```bash
-git clone --single-branch --branch main git@github.com:adriandborsan/bachelor-thesis.git main && \
 git clone --single-branch --branch k8sconfig git@github.com:adriandborsan/bachelor-thesis.git k8sconfig && \
 git clone --single-branch --branch clientback git@github.com:adriandborsan/bachelor-thesis.git clientback && \
 git clone --single-branch --branch clientfront git@github.com:adriandborsan/bachelor-thesis.git clientfront && \
@@ -128,7 +164,7 @@ Before proceeding with the Kubernetes deployment, it's crucial to follow the ste
 2. **Neo4j**: The Neo4j database should be deployed next. This sets up your graph database for use by the rest of the services.
 3. **K8sconfig Skaffold**: It is important to run Skaffold in the `./k8sconfig` directory before running the Skaffold for the principal microservices. This sets up important microservices that the principal ones depend on.
 4. **Principal Microservices**: Once all the dependencies are up, you can deploy the main microservices using Skaffold in the root directory.
-5. **Ingress Configuration**: Finally, apply the `ingress.yaml` file to enable Ingress to route traffic to the deployed microservices. It's essential to do this last to make sure that all the services to which the ingress routes traffic are up and running.
+5. **Ingress Configuration**: Finally, apply the `ingress.yaml` file to enable Ingress to route traffic to the deployed microservices. It's essential to perform this step last to ensure that all services routed by the ingress are up and running.
 
 ### Ingress-Nginx
 
@@ -138,7 +174,7 @@ helm repo update && \
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress-nginx
 ```
 
-on windows it is also necessary to append these entries to `C:\Windows\System32\drivers\etc\hosts`
+for testing on windows it is also necessary to append these entries to `C:\Windows\System32\drivers\etc\hosts`
 
 ```txt
 127.0.0.1 clientfront.hehe
@@ -150,7 +186,7 @@ on windows it is also necessary to append these entries to `C:\Windows\System32\
 
 ### Kubernetes Dashboard
 
-Run the following commands inside the `./k8sconfig/dashboard` directory.
+Run the following command inside the `./k8sconfig/dashboard` directory.
 
 ```bash
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/ && \
@@ -161,7 +197,7 @@ kubectl apply -f dashboard-combined.yaml
 
 ### Neo4j
 
-Run the following commands inside the `./k8sconfig/neo4j` directory.
+Run the following command inside the `./k8sconfig/neo4j` directory.
 
 ```bash
 helm repo add neo4j https://helm.neo4j.com/neo4j && \
@@ -187,13 +223,10 @@ skaffold run
 
 ### Ingress
 
-Run the following commands inside the root directory.
+Run the following command inside the root directory.
 
 ```bash
-kubectl apply -k k8sconfig/ingress
-```
-
-```bash
+kubectl apply -k k8sconfig/ingress && \
 kubectl apply -f k8sconfig/ingress/ingress.yaml
 ```
 
@@ -201,24 +234,14 @@ kubectl apply -f k8sconfig/ingress/ingress.yaml
 
 ## Troubleshooting
 
-- **Windows End of Line Issue**: Ensure bash scripts have LF line endings.
+- **Windows End of Line Issue**: Ensure bash scripts have LF line endings which can be changed from a text editor such as Visual Studio Code.
 - **Persistent Volume and Interdependencies**: Rerun `skaffold run` for the specific service and make sure the service that is dependent on was already deployed.
 
 ---
 
-## Branches and Configurations
-
-- [adminback](https://github.com/adriandborsan/bachelor-thesis/tree/adminback)
-- [adminfront](https://github.com/adriandborsan/bachelor-thesis/tree/adminfront)
-- [authlistener](https://github.com/adriandborsan/bachelor-thesis/tree/authlistener)
-- [clientback](https://github.com/adriandborsan/bachelor-thesis/tree/clientback)
-- [clientfront](https://github.com/adriandborsan/bachelor-thesis/tree/clientfront)
-- [k8sconfig](https://github.com/adriandborsan/bachelor-thesis/tree/k8sconfig)
-- [keycloakify](https://github.com/adriandborsan/bachelor-thesis/tree/keycloakify)
-
----
-
 ## Documentation
+
+For a detailed explanation and an in-depth look at the thesis, the thesis paper and PowerPoint presentation are available in PDF format.
 
 - [Thesis Paper PDF](./resources/thesis.pdf)
 - [Presentation PDF](./resources/presentation.pdf)
