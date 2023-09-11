@@ -192,7 +192,8 @@ Run the following command inside the `./k8sconfig/dashboard` directory.
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/ && \
 helm repo update && \
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard && \
-kubectl apply -f dashboard-combined.yaml
+kubectl apply -f dashboard-combined.yaml && \
+kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d
 ```
 
 ### Neo4j
